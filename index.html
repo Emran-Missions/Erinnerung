@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HI-FLY HILDEN - TRAMPOLINO REMINDER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff007f;
+            --neon-yellow: #ffe600;
+            --neon-green: #00ff9d;
+            --bg-dark: #060913;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(255, 0, 127, 0.25), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.2), transparent 50%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid var(--neon-pink);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
+            backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--neon-blue), var(--neon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        p.hero-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #c2e9fb;
+            margin-bottom: 20px;
+        }
+
+        /* TIMER GRID */
+        .timer-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-yellow);
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .time-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 10px 5px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .time-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--neon-green);
+        }
+
+        .time-label {
+            font-size: 0.75rem;
+            color: #8faec4;
+            margin-top: 4px;
+        }
+
+        /* LOCATION & INFO */
+        .info-box {
+            background: rgba(0, 240, 255, 0.07);
+            border: 1px dashed var(--neon-blue);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .info-item:last-child { margin-bottom: 0; }
+
+        .info-icon {
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+
+        /* TRAMPOLINE INTERACTIVE AREA */
+        .jump-zone {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed var(--neon-green);
+            border-radius: 15px;
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .jump-hint {
+            position: absolute;
+            top: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--neon-yellow);
+            animation: pulseHint 1.5s infinite alternate;
+        }
+
+        @keyframes pulseHint {
+            0% { opacity: 0.5; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1.02); }
+        }
+
+        .jumper {
+            font-size: 2.8rem;
+            position: absolute;
+            bottom: 25px;
+            transition: transform 0.15s ease-out;
+            filter: drop-shadow(0 0 10px var(--neon-blue));
+        }
+
+        .trampoline-bed {
+            width: 80%;
+            height: 12px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px var(--neon-pink);
+            transition: transform 0.1s ease;
+        }
+
+        /* CALENDAR BUTTON */
+        .btn-cal {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow));
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cal:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body onclick="initAudio()">
+
+    <div class="container">
+        <div class="badge">🚀 HI-FLY & TRAMPOLINO HILDEN</div>
+        <h1>ZERO GRAVITY TIME!</h1>
+        
+        <p class="hero-text">
+            آماده‌ی پرواز روی هوا و هیجان فوق‌العاده در Hi-Fly Hilden هستید؟ 💥<br>
+            زمان پرش، معلق ماندن روی فضا و ساختن یک روز فراموش‌نشدنی فرا رسیده!
+        </p>
+
+        <!-- TIMER -->
+        <div class="timer-title">⏳ COUNTDOWN TO FLIGHT / شمارش معکوس:</div>
+        <div class="timer-grid">
+            <div class="time-card">
+                <div class="time-num" id="days">00</div>
+                <div class="time-label">TAGE</div>
+            </div>
+            <div class="time-card">
+                <div class="time-num" id="hours">00</div>
+                <div class="time-label">STUNDEN</div>
+            </div>
+            <div class="time-card">
+                <div class="time-num" id="minutes">00</div>
+                <div class="time-label">MINUTEN</div>
+            </div>
+            <div class="time-card">
+                <div class="time-num" id="seconds">00</div>
+                <div class="time-label">SEKUNDEN</div>
+            </div>
+        </div>
+
+        <!-- LOCATION INFO -->
+        <div class="info-box">
+            <div class="info-item"><span class="info-icon">📅</span> <b>Samstag, 3. Oktober 2026</b></div>
+            <div class="info-item"><span class="info-icon">🕑</span> <b>15:00 - 19:00 Uhr</b></div>
+            <div class="info-item"><span class="info-icon">📍</span> <span>Kleinhülsen 17, 40721 Hilden</span></div>
+            <div class="info-item"><span class="info-icon">🎉</span> <span>Kombi Geburtstag Hi-Fly & Trampolino</span></div>
+        </div>
+
+        <!-- TRAMPOLINE JUMP ZONE -->
+        <div class="jump-zone" onclick="triggerJump()">
+            <div class="jump-hint">👇 روی این کادر کلیک یا ضربه بزنید تا بپرید! 👇</div>
+            <div class="jumper" id="jumper">🧍</div>
+            <div class="trampoline-bed" id="trampBed"></div>
+        </div>
+
+        <!-- GOOGLE CALENDAR BUTTON -->
+        <a class="btn-cal" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Hi-Fly+%26+Trampolino+Geburtstag!&dates=20261003T130000Z/20261003T170000Z&details=Hi-Fly+%26+Trampolino+Kinderspielpark+Geburtstagsfeier!&location=Kleinh%C3%BClsen+17,+40721+Hilden" target="_blank">
+            📅 افزودن مستقیم به تقویم گوگل
+        </a>
+    </div>
+
+    <script>
+        let audioCtx = null;
+        let isJumping = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // صدای واقعی فنر ترامپولین
+        function playSpringSound() {
+            initAudio();
+            if(!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(160, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(550, audioCtx.currentTime + 0.15);
+            osc.frequency.exponentialRampToValueAtTime(280, audioCtx.currentTime + 0.3);
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        // صدای الکترونیکی ثانیه‌شمار
+        function playTickSound() {
+            initAudio();
+            if(!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.03);
+        }
+
+        // پرش ترامپولین فقط با ضربه زدن روی کادر
+        function triggerJump() {
+            if (isJumping) return;
+            isJumping = true;
+
+            playSpringSound();
+
+            const jumper = document.getElementById('jumper');
+            const trampBed = document.getElementById('trampBed');
+
+            trampBed.style.transform = 'scaleY(2) translateY(8px)';
+            
+            setTimeout(() => {
+                trampBed.style.transform = 'scaleY(1) translateY(0)';
+                jumper.innerText = '🚀';
+                jumper.style.transform = 'translateY(-95px) scale(1.25)';
+            }, 100);
+
+            setTimeout(() => {
+                jumper.style.transform = 'translateY(0) scale(1)';
+                jumper.innerText = '🤸';
+            }, 450);
+
+            setTimeout(() => {
+                jumper.innerText = '🧍';
+                isJumping = false;
+            }, 700);
+        }
+
+        // تایمر شمارش معکوس برای ساعت ۱۵:۰۰ شنبه ۳ اکتبر
+        function startCountdown() {
+            const targetDate = new Date('October 3, 2026 15:00:00').getTime();
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+
+                if (difference > 0) {
+                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                    document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                    document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                    document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+
+                    playTickSound();
+                }
+            }, 1000);
+        }
+
+        startCountdown();
+    </script>
+</body>
+</html>
