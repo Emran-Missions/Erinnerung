@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HI-FLY HILDEN - TRAMPOLINO REMINDER</title>
+    <title>HI-FLY HILDEN - CHALLENGE & REMINDER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,7 +26,7 @@
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            padding: 20px;
+            padding: 15px;
             background-image: 
                 radial-gradient(circle at 50% 10%, rgba(255, 0, 127, 0.25), transparent 60%),
                 radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.2), transparent 50%);
@@ -34,12 +34,12 @@
 
         .container {
             width: 100%;
-            max-width: 500px;
-            background: rgba(15, 23, 42, 0.85);
+            max-width: 480px;
+            background: rgba(15, 23, 42, 0.88);
             border: 2px solid var(--neon-pink);
             border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
+            padding: 22px;
+            box-shadow: 0 0 35px rgba(255, 0, 127, 0.3);
             backdrop-filter: blur(15px);
             position: relative;
             z-index: 10;
@@ -52,146 +52,48 @@
             color: #000;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 0.8rem;
-            padding: 6px 14px;
+            font-size: 0.75rem;
+            padding: 5px 12px;
             border-radius: 20px;
             letter-spacing: 2px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 15px var(--neon-pink);
+            margin-bottom: 12px;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 900;
             background: linear-gradient(135deg, #fff, var(--neon-blue), var(--neon-yellow));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
-        }
-
-        p.hero-text {
-            font-size: 1.1rem;
-            line-height: 1.5;
-            color: #c2e9fb;
-            margin-bottom: 20px;
-        }
-
-        /* TIMER GRID */
-        .timer-title {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-yellow);
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
-            margin-bottom: 10px;
-        }
-
-        .timer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .time-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--neon-blue);
-            border-radius: 12px;
-            padding: 10px 5px;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .time-num {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--neon-green);
-        }
-
-        .time-label {
-            font-size: 0.75rem;
-            color: #8faec4;
-            margin-top: 4px;
-        }
-
-        /* LOCATION & INFO */
-        .info-box {
-            background: rgba(0, 240, 255, 0.07);
-            border: 1px dashed var(--neon-blue);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            font-size: 1.05rem;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .info-item:last-child { margin-bottom: 0; }
-
-        .info-icon {
-            font-size: 1.3rem;
-            margin-right: 10px;
-        }
-
-        /* TRAMPOLINE INTERACTIVE AREA */
-        .jump-zone {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px dashed var(--neon-green);
-            border-radius: 15px;
-            height: 160px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .jump-hint {
-            position: absolute;
-            top: 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-            color: var(--neon-yellow);
-            animation: pulseHint 1.5s infinite alternate;
-        }
-
-        @keyframes pulseHint {
-            0% { opacity: 0.5; transform: scale(0.98); }
-            100% { opacity: 1; transform: scale(1.02); }
-        }
-
-        .jumper {
-            font-size: 2.8rem;
-            position: absolute;
-            bottom: 25px;
-            transition: transform 0.15s ease-out;
-            filter: drop-shadow(0 0 10px var(--neon-blue));
-        }
-
-        .trampoline-bed {
-            width: 80%;
-            height: 12px;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
-            border-radius: 10px;
             margin-bottom: 15px;
-            box-shadow: 0 0 15px var(--neon-pink);
-            transition: transform 0.1s ease;
         }
 
-        /* CALENDAR BUTTON */
-        .btn-cal {
+        .input-group {
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
             background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow));
             border: none;
             border-radius: 12px;
@@ -200,73 +102,172 @@
             font-weight: 900;
             font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
-            transition: transform 0.2s;
-            text-decoration: none;
-            display: inline-block;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
         }
 
-        .btn-cal:hover {
-            transform: scale(1.03);
+        /* TIMER STYLES */
+        .timer-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-yellow);
+            margin-bottom: 15px;
+            font-weight: 700;
         }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .time-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-blue);
+            border-radius: 10px;
+            padding: 8px 4px;
+        }
+
+        .time-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--neon-green);
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            color: #8faec4;
+        }
+
+        /* ADVANCED TRAMPOLINE GAME */
+        .jump-zone {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed var(--neon-green);
+            border-radius: 15px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .height-gauge {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--neon-blue);
+        }
+
+        .jump-hint {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 0.85rem;
+            color: var(--neon-yellow);
+        }
+
+        .jumper {
+            font-size: 3rem;
+            position: absolute;
+            bottom: 20px;
+            transition: transform 0.1s ease-out;
+            filter: drop-shadow(0 0 12px var(--neon-blue));
+        }
+
+        .trampoline-bed {
+            width: 85%;
+            height: 12px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px var(--neon-pink);
+            transition: transform 0.08s ease;
+        }
+
+        .info-box {
+            background: rgba(0, 240, 255, 0.07);
+            border: 1px dashed var(--neon-blue);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body onclick="initAudio()">
 
     <div class="container">
-        <div class="badge">🚀 HI-FLY & TRAMPOLINO HILDEN</div>
-        <h1>ZERO GRAVITY TIME!</h1>
-        
-        <p class="hero-text">
-            آماده‌ی پرواز روی هوا و هیجان فوق‌العاده در Hi-Fly Hilden هستید؟ 💥<br>
-            زمان پرش، معلق ماندن روی فضا و ساختن یک روز فراموش‌نشدنی فرا رسیده!
-        </p>
-
-        <!-- TIMER -->
-        <div class="timer-title">⏳ COUNTDOWN TO FLIGHT / شمارش معکوس:</div>
-        <div class="timer-grid">
-            <div class="time-card">
-                <div class="time-num" id="days">00</div>
-                <div class="time-label">TAGE</div>
+        <!-- CHALLENGE VIEW -->
+        <div id="challengeView">
+            <div class="badge">🔒 SECURITY CHALLENGE</div>
+            <h1>HI-FLY HILDEN</h1>
+            <p style="color: #c2e9fb; margin-top: 10px;">برای ورود به برنامه، به سؤال زیر پاسخ دهید:</p>
+            
+            <div class="input-group">
+                <p style="color: var(--neon-yellow); font-weight: bold; margin-bottom: 8px;">
+                    یکی از خصوصیات یا ویژگی‌های عمران را بنویسید:
+                </p>
+                <input type="text" id="traitInput" placeholder="مثلاً: مهربان، شجاع، شوخ...">
             </div>
-            <div class="time-card">
-                <div class="time-num" id="hours">00</div>
-                <div class="time-label">STUNDEN</div>
-            </div>
-            <div class="time-card">
-                <div class="time-num" id="minutes">00</div>
-                <div class="time-label">MINUTEN</div>
-            </div>
-            <div class="time-card">
-                <div class="time-num" id="seconds">00</div>
-                <div class="time-label">SEKUNDEN</div>
-            </div>
+            
+            <button class="btn" onclick="checkChallenge()">ورود به برنامه 🚀</button>
         </div>
 
-        <!-- LOCATION INFO -->
-        <div class="info-box">
-            <div class="info-item"><span class="info-icon">📅</span> <b>Samstag, 3. Oktober 2026</b></div>
-            <div class="info-item"><span class="info-icon">🕑</span> <b>15:00 - 19:00 Uhr</b></div>
-            <div class="info-item"><span class="info-icon">📍</span> <span>Kleinhülsen 17, 40721 Hilden</span></div>
-            <div class="info-item"><span class="info-icon">🎉</span> <span>Kombi Geburtstag Hi-Fly & Trampolino</span></div>
-        </div>
+        <!-- MAIN APP VIEW -->
+        <div id="mainView" class="hidden">
+            <div class="badge">🚀 HI-FLY & TRAMPOLINO HILDEN</div>
+            
+            <div class="timer-subtitle">⏱️ تایمر معکوس تا پرش دسته‌جمعی ما:</div>
 
-        <!-- TRAMPOLINE JUMP ZONE -->
-        <div class="jump-zone" onclick="triggerJump()">
-            <div class="jump-hint">👇 روی این کادر کلیک یا ضربه بزنید تا بپرید! 👇</div>
-            <div class="jumper" id="jumper">🧍</div>
-            <div class="trampoline-bed" id="trampBed"></div>
-        </div>
+            <div class="timer-grid">
+                <div class="time-card">
+                    <div class="time-num" id="days">00</div>
+                    <div class="time-label">روز</div>
+                </div>
+                <div class="time-card">
+                    <div class="time-num" id="hours">00</div>
+                    <div class="time-label">ساعت</div>
+                </div>
+                <div class="time-card">
+                    <div class="time-num" id="minutes">00</div>
+                    <div class="time-label">دقیقه</div>
+                </div>
+                <div class="time-card">
+                    <div class="time-num" id="seconds">00</div>
+                    <div class="time-label">ثانیه</div>
+                </div>
+            </div>
 
-        <!-- GOOGLE CALENDAR BUTTON -->
-        <a class="btn-cal" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Hi-Fly+%26+Trampolino+Geburtstag!&dates=20261003T130000Z/20261003T170000Z&details=Hi-Fly+%26+Trampolino+Kinderspielpark+Geburtstagsfeier!&location=Kleinh%C3%BClsen+17,+40721+Hilden" target="_blank">
-            📅 افزودن مستقیم به تقویم گوگل
-        </a>
+            <!-- INTERACTIVE TRAMPOLINE GAME -->
+            <div class="jump-zone" onclick="boostJump()">
+                <div class="jump-hint">👇 ضربه بزن تا بپری!</div>
+                <div class="height-gauge">ارتفاع: <span id="heightNum" style="color:var(--neon-green)">0</span>m</div>
+                <div class="jumper" id="jumper">😔</div>
+                <div class="trampoline-bed" id="trampBed"></div>
+            </div>
+
+            <div class="info-box">
+                📍 <b>مکان:</b> Kleinhülsen 17, 40721 Hilden<br>
+                📅 <b>زمان:</b> شنبه، ۳ اکتبر ۲۰۲۶ (۱۵:۰۰ تا ۱۹:۰۰)
+            </div>
+        </div>
     </div>
 
     <script>
         let audioCtx = null;
-        let isJumping = false;
+        let jumpPower = 0;
+        let lastTapTime = 0;
+        let resetTimer = null;
 
         function initAudio() {
             if (!audioCtx) {
@@ -277,8 +278,7 @@
             }
         }
 
-        // صدای واقعی فنر ترامپولین
-        function playSpringSound() {
+        function playSpringSound(pitchMultiplier) {
             initAudio();
             if(!audioCtx) return;
 
@@ -286,70 +286,96 @@
             const gain = audioCtx.createGain();
 
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(160, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(550, audioCtx.currentTime + 0.15);
-            osc.frequency.exponentialRampToValueAtTime(280, audioCtx.currentTime + 0.3);
+            const baseFreq = 160 + (pitchMultiplier * 40);
+            osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(baseFreq * 3, audioCtx.currentTime + 0.12);
+            osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.5, audioCtx.currentTime + 0.25);
 
             gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
 
             osc.connect(gain);
             gain.connect(audioCtx.destination);
 
             osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
+            osc.stop(audioCtx.currentTime + 0.25);
         }
 
-        // صدای الکترونیکی ثانیه‌شمار
         function playTickSound() {
             initAudio();
             if(!audioCtx) return;
 
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-
             osc.start();
             osc.stop(audioCtx.currentTime + 0.03);
         }
 
-        // پرش ترامپولین فقط با ضربه زدن روی کادر
-        function triggerJump() {
-            if (isJumping) return;
-            isJumping = true;
+        function checkChallenge() {
+            const answer = document.getElementById('traitInput').value.trim();
+            if (answer.length > 0) {
+                document.getElementById('challengeView').classList.add('hidden');
+                document.getElementById('mainView').classList.remove('hidden');
+                startCountdown();
+            } else {
+                alert('لطفاً یکی از خصوصیات عمران را بنویسید!');
+            }
+        }
 
-            playSpringSound();
+        function boostJump() {
+            const now = Date.now();
+            const timeDiff = now - lastTapTime;
+            lastTapTime = now;
+
+            // ضربه‌های متوالی سریع قدرت پرش را افزایش می‌دهد
+            if (timeDiff < 400) {
+                jumpPower = Math.min(jumpPower + 1, 5);
+            } else {
+                jumpPower = 1;
+            }
+
+            playSpringSound(jumpPower);
 
             const jumper = document.getElementById('jumper');
             const trampBed = document.getElementById('trampBed');
+            const heightNum = document.getElementById('heightNum');
 
-            trampBed.style.transform = 'scaleY(2) translateY(8px)';
-            
+            const heightPx = 40 + (jumpPower * 25);
+            const meters = jumpPower * 3;
+
+            heightNum.innerText = meters;
+
+            // انیمیشن ترامپولین
+            trampBed.style.transform = `scaleY(${1 + jumpPower*0.3}) translateY(6px)`;
+
             setTimeout(() => {
                 trampBed.style.transform = 'scaleY(1) translateY(0)';
-                jumper.innerText = '🚀';
-                jumper.style.transform = 'translateY(-95px) scale(1.25)';
-            }, 100);
+                
+                if (jumpPower >= 4) {
+                    jumper.innerText = '🚀';
+                } else {
+                    jumper.innerText = '🤸';
+                }
+                
+                jumper.style.transform = `translateY(-${heightPx}px) scale(${1 + jumpPower*0.1})`;
+            }, 80);
 
-            setTimeout(() => {
+            // بازگشت به حالت عادی یا غمگین پس از عدم ضربه
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
                 jumper.style.transform = 'translateY(0) scale(1)';
-                jumper.innerText = '🤸';
-            }, 450);
-
-            setTimeout(() => {
-                jumper.innerText = '🧍';
-                isJumping = false;
-            }, 700);
+                jumper.innerText = '😔';
+                heightNum.innerText = '0';
+                jumpPower = 0;
+            }, 1200);
         }
 
-        // تایمر شمارش معکوس برای ساعت ۱۵:۰۰ شنبه ۳ اکتبر
         function startCountdown() {
             const targetDate = new Date('October 3, 2026 15:00:00').getTime();
 
@@ -372,8 +398,6 @@
                 }
             }, 1000);
         }
-
-        startCountdown();
     </script>
 </body>
 </html>
