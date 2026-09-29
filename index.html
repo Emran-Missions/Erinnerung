@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>HI-FLY Hilden</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +26,8 @@
   --body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
   color-scheme:dark;
 }
-html{background:var(--bg)}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
 body{
   background:
     radial-gradient(ellipse 80% 45% at 50% 0%,rgba(255,46,136,.22),transparent 70%),
@@ -31,6 +37,7 @@ body{
   font-family:var(--body);
   font-size:16px;
   line-height:1.5;
+  margin:0;
   min-height:100vh;
   padding-inline:16px;
   padding-block:18px 32px;
@@ -96,9 +103,65 @@ h2{font-size:clamp(1.3rem,5.4vw,1.6rem);line-height:1.15;margin-top:10px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .ghost{flex:1 1 150px;text-align:center;text-decoration:none;border-radius:12px;padding:11px 14px;font:600 .95rem var(--display);color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--line);cursor:pointer}
 .ghost:hover{border-color:var(--cyan)}
+/* ---- section tabs ---- */
+.apptabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:5px;background:rgba(10,12,32,.92);border:1px solid var(--line);border-radius:16px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.apptab{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 6px;border:0;border-radius:11px;background:transparent;color:var(--muted);font:600 .95rem var(--display);cursor:pointer;min-width:0}
+.apptab svg{width:18px;height:18px;flex:none}
+.apptab[aria-selected="true"]{background:linear-gradient(95deg,var(--pink),var(--yellow));color:var(--ink)}
+.apptab:focus-visible,.chip:focus-visible,.topic:focus-visible,.qopt:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.lead2{color:var(--muted);font-weight:700;margin:8px 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);border-radius:999px;padding:6px 12px;font:600 .85rem var(--display);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan);color:var(--ink)}
+.duo{display:flex;gap:10px;flex-wrap:wrap}
+.duo > *{flex:1 1 150px}
+.wide{width:100%;margin-top:12px}
+.stat{color:var(--muted);font-weight:700;font-size:.92rem;margin:12px 0 0}
+.qtop{display:flex;justify-content:space-between;gap:10px;font-weight:800;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.qcat{color:var(--yellow)}
+.qnum{color:var(--muted);font-variant-numeric:tabular-nums}
+.qbar{height:5px;background:rgba(255,255,255,.08);border-radius:5px;margin:8px 0 14px;overflow:hidden}
+.qbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow));transition:width .35s}
+.qq{font:600 1.25rem/1.4 var(--display);margin:0 0 14px;text-wrap:balance;white-space:pre-line}
+.mq{font-variant-numeric:tabular-nums}
+.qopts{display:grid;gap:8px}
+.qopt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);font:700 1rem var(--body);cursor:pointer}
+.qopt:hover:not(:disabled){border-color:var(--cyan)}
+.qopt .k{flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:rgba(0,0,0,.35);font:700 .8rem var(--display);color:var(--cyan)}
+.qopt:disabled{cursor:default}
+.qopt.right{border-color:var(--green);background:rgba(61,255,168,.14)}
+.qopt.right .k{background:var(--green);color:var(--ink)}
+.qopt.wrong{border-color:var(--danger);background:rgba(255,107,122,.14)}
+.qopt.wrong .k{background:var(--danger);color:var(--ink)}
+.qexp{margin:12px 0 0;padding:10px 12px;border-left:3px solid var(--cyan);background:rgba(34,228,255,.07);border-radius:0 10px 10px 0;color:var(--text);font-weight:600}
+.bigscore{text-align:center;margin:8px 0 4px}
+.bigscore b{font:700 4.2rem/1 var(--display);color:var(--green)}
+.bigscore span{font:600 1.4rem var(--display);color:var(--muted);margin-left:6px}
+.endtxt{text-align:center;font-weight:700;margin:6px 0 16px;text-wrap:balance}
+.flash{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.ans{font:700 1.3rem var(--display);color:var(--green);margin:0}
+.linkbtn{display:block;margin:12px auto 0}
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.topic{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;min-width:0}
+.topic:hover{border-color:var(--cyan)}
+.topic b{font:600 1rem var(--display)}
+.topic small{color:var(--muted);font-weight:700;font-size:.8rem}
+.topic.mix{grid-column:1 / -1;background:linear-gradient(95deg,rgba(255,46,136,.18),rgba(255,210,63,.14))}
+.mfb{margin-top:12px;padding:12px 14px;border-radius:12px;font-weight:700;white-space:pre-line}
+.mfb.ok{background:rgba(61,255,168,.12);border:1px solid rgba(61,255,168,.5)}
+.mfb.bad{background:rgba(255,107,122,.12);border:1px solid rgba(255,107,122,.5)}
+.mfb b{display:block;margin-bottom:4px}
+.mfb.ok b{color:var(--green)}
+.mfb.bad b{color:var(--danger)}
+@media (max-width:420px){
+  .apptab{font-size:.85rem;gap:5px}
+  .qq{font-size:1.12rem}
+  .topics{grid-template-columns:1fr}
+}
 @media (prefers-reduced-motion:reduce){.shake,.pop{animation:none}}
 </style>
-
+</head>
+<body>
 <div class="app">
   <div class="topbar">
     <div class="brand">HI-FLY <b>HILDEN</b></div>
@@ -129,6 +192,100 @@ h2{font-size:clamp(1.3rem,5.4vw,1.6rem);line-height:1.15;margin-top:10px}
   </section>
 
   <!-- MAIN VIEW -->
+  <nav class="apptabs" id="appTabs" role="tablist" aria-label="Bereiche" hidden>
+    <button class="apptab" role="tab" type="button" data-view="treffen" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c3-2 6-2 9 0s6 2 9 0"/><path d="M12 13V4M8 8l4-4 4 4"/></svg>
+      Treffen
+    </button>
+    <button class="apptab" role="tab" type="button" data-view="wissen" aria-selected="false" tabindex="-1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+      Wissen
+    </button>
+    <button class="apptab" role="tab" type="button" data-view="mathe" aria-selected="false" tabindex="-1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h6M8 3v6M14 6h5M5 16l4 4M9 16l-4 4M14 15h5M14 19h5"/></svg>
+      Mathe 4
+    </button>
+  </nav>
+
+  <!-- WISSEN -->
+  <section class="card" id="wissenView" hidden>
+    <span class="pill">Wissens-Station</span>
+    <h2>Wissen f&uuml;r schlaue K&ouml;pfe</h2>
+    <p class="lead2">&Uuml;ber 100 echte Fragen aus Weltraum, Tierwelt, Erde, Deutschland, K&ouml;rper, Naturwissenschaft und Geschichte. Mit Karteikarten lernst du, im Quiz pr&uuml;fst du dich.</p>
+    <div class="chips" id="wCats" role="group" aria-label="Themen"></div>
+    <div id="wHome">
+      <div class="duo">
+        <button class="btn" id="wQuizBtn" type="button">Quiz: 10 Fragen</button>
+        <button class="ghost" id="wCardBtn" type="button">Karteikarten</button>
+      </div>
+      <p class="stat" id="wStat"></p>
+    </div>
+    <div id="wQuiz" hidden>
+      <div class="qtop"><span class="qcat" id="wqCat"></span><span class="qnum" id="wqNum"></span></div>
+      <div class="qbar"><i id="wqBar"></i></div>
+      <h3 class="qq" id="wqQ"></h3>
+      <div class="qopts" id="wqOpts"></div>
+      <p class="qexp" id="wqExp" aria-live="polite" hidden></p>
+      <button class="btn wide" id="wqNext" type="button" hidden>Weiter</button>
+    </div>
+    <div id="wEnd" hidden>
+      <div class="bigscore"><b id="wScore">0</b><span>/ 10</span></div>
+      <p class="endtxt" id="wEndTxt"></p>
+      <div class="duo">
+        <button class="btn" id="wAgain" type="button">Neue Runde</button>
+        <button class="ghost" id="wBack" type="button">Zur &Uuml;bersicht</button>
+      </div>
+    </div>
+    <div id="wCards" hidden>
+      <div class="flash" id="wcCard">
+        <div class="qtop"><span class="qcat" id="wcCat"></span><span class="qnum" id="wcNum"></span></div>
+        <h3 class="qq" id="wcQ"></h3>
+        <div id="wcAns" hidden>
+          <p class="ans" id="wcA"></p>
+          <p class="qexp" id="wcE"></p>
+        </div>
+        <button class="ghost wide" id="wcShow" type="button">Antwort zeigen</button>
+      </div>
+      <div class="duo">
+        <button class="ghost" id="wcPrev" type="button">Zur&uuml;ck</button>
+        <button class="btn" id="wcNext" type="button">N&auml;chste Karte</button>
+      </div>
+      <button class="linkbtn" id="wcBack" type="button">Zur &Uuml;bersicht</button>
+    </div>
+  </section>
+
+  <!-- MATHE -->
+  <section class="card" id="matheView" hidden>
+    <span class="pill">Mathe Klasse 4 &middot; NRW</span>
+    <h2>Mathe-Training</h2>
+    <p class="lead2">Passend zum Lehrplan Mathematik der Grundschule in Nordrhein-Westfalen. W&auml;hle ein Thema: jede Runde hat 10 neue Aufgaben und zeigt dir den Rechenweg.</p>
+    <div class="topics" id="mTopics"></div>
+    <div id="mPlay" hidden>
+      <div class="qtop"><span class="qcat" id="mpTopic"></span><span class="qnum" id="mpNum"></span></div>
+      <div class="qbar"><i id="mpBar"></i></div>
+      <h3 class="qq mq" id="mpQ"></h3>
+      <form class="answer" id="mpForm" autocomplete="off">
+        <label class="field" for="mpInput">
+          <input id="mpInput" type="text" inputmode="numeric" placeholder="?" aria-label="Deine Antwort">
+          <span class="unit" id="mpUnit"></span>
+        </label>
+        <button class="btn" id="mpCheck" type="submit">Pr&uuml;fen</button>
+      </form>
+      <div class="qopts" id="mpOpts" hidden></div>
+      <div class="mfb" id="mpFb" aria-live="polite" hidden></div>
+      <button class="btn wide" id="mpNext" type="button" hidden>Weiter</button>
+      <button class="linkbtn" id="mpQuit" type="button">Runde beenden</button>
+    </div>
+    <div id="mEnd" hidden>
+      <div class="bigscore"><b id="mScore">0</b><span>/ 10</span></div>
+      <p class="endtxt" id="mEndTxt"></p>
+      <div class="duo">
+        <button class="btn" id="mAgain" type="button">Noch eine Runde</button>
+        <button class="ghost" id="mBack" type="button">Anderes Thema</button>
+      </div>
+    </div>
+  </section>
+
   <section class="card" id="countView" hidden>
     <span class="pill">HI-FLY &amp; Trampolino Hilden</span>
     <h2>Countdown zum Gruppensprung</h2>
@@ -341,14 +498,546 @@ document.getElementById('newTaskBtn').addEventListener('click', function(){
 
 function openApp(){
   document.getElementById('gateView').hidden = true;
-  document.getElementById('countView').hidden = false;
-  document.getElementById('stageView').hidden = false;
-  document.getElementById('infoView').hidden = false;
+  document.getElementById('appTabs').hidden = false;
+  selectView('treffen');
   startCountdown();
   startGame();
 }
 
 newTask();
+
+/* ================= LEARNING AREA: tabs ================= */
+var LV = { cur: 'treffen' };
+var appTabBtns = document.querySelectorAll('.apptab');
+function selectView(name){
+  LV.cur = name;
+  for (var i = 0; i < appTabBtns.length; i++) {
+    var on = appTabBtns[i].getAttribute('data-view') === name;
+    appTabBtns[i].setAttribute('aria-selected', on ? 'true' : 'false');
+    appTabBtns[i].tabIndex = on ? 0 : -1;
+  }
+  var tre = name === 'treffen';
+  document.getElementById('countView').hidden = !tre;
+  document.getElementById('stageView').hidden = !tre;
+  document.getElementById('infoView').hidden = !tre;
+  document.getElementById('wissenView').hidden = name !== 'wissen';
+  document.getElementById('matheView').hidden = name !== 'mathe';
+  if (name === 'wissen') wRenderHome();
+  if (name === 'mathe') mRenderTopics();
+  window.scrollTo(0, 0);
+}
+for (var ai = 0; ai < appTabBtns.length; ai++) {
+  appTabBtns[ai].addEventListener('click', function(){ initAudio(); tone('sine', 880, 1320, 0.07, 0.05); selectView(this.getAttribute('data-view')); });
+  appTabBtns[ai].addEventListener('keydown', function(ev){
+    if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
+    var order = ['treffen', 'wissen', 'mathe'];
+    var i = order.indexOf(this.getAttribute('data-view'));
+    i = (i + (ev.key === 'ArrowRight' ? 1 : 2)) % 3;
+    selectView(order[i]);
+    document.querySelector('.apptab[data-view="' + order[i] + '"]').focus();
+  });
+}
+
+function lsGet(k, d){ try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
+function lsSet(k, v){ try { localStorage.setItem(k, v); } catch (e) {} }
+function lShuffle(a){ for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function nf(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'); }
+function buildOptions(box, list, onPick){
+  box.innerHTML = '';
+  list.forEach(function(o, k){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'qopt';
+    var key = document.createElement('span'); key.className = 'k'; key.textContent = 'ABCD'.charAt(k);
+    var tx = document.createElement('span'); tx.textContent = o.t;
+    b.appendChild(key); b.appendChild(tx);
+    b._ok = o.ok;
+    b.addEventListener('click', function(){ onPick(b, o.ok); });
+    box.appendChild(b);
+  });
+}
+function markOptions(box, picked, ok){
+  var all = box.querySelectorAll('.qopt');
+  for (var i = 0; i < all.length; i++) { all[i].disabled = true; if (all[i]._ok) all[i].classList.add('right'); }
+  if (!ok) picked.classList.add('wrong');
+}
+function cheer(){ var n = [523.3, 659.3, 784, 1046.5, 1318.5]; for (var i = 0; i < n.length; i++) tone('triangle', n[i], 0, 0.3, 0.12, i * 0.08); }
+
+/* ================= WISSEN ================= */
+/* first answer is correct; options are shuffled on screen */
+var WQ = [
+  { c: 'Weltraum', q: 'Welcher Planet ist der Sonne am n\u00e4chsten?', a: ['Merkur', 'Venus', 'Mars', 'Erde'], e: 'Merkur ist der kleinste Planet und kreist ganz nah um die Sonne.' },
+  { c: 'Weltraum', q: 'Welcher ist der gr\u00f6\u00dfte Planet unseres Sonnensystems?', a: ['Jupiter', 'Saturn', 'Neptun', 'Erde'], e: 'Jupiter ist so gro\u00df, dass mehr als 1000 Erden hineinpassen w\u00fcrden.' },
+  { c: 'Weltraum', q: 'Wie viele Planeten hat unser Sonnensystem?', a: ['8', '7', '9', '10'], e: 'Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus und Neptun. Pluto z\u00e4hlt seit 2006 als Zwergplanet.' },
+  { c: 'Weltraum', q: 'Welcher Planet wird der \u201eRote Planet\u201c genannt?', a: ['Mars', 'Venus', 'Jupiter', 'Merkur'], e: 'Rostiges Eisen im Staub f\u00e4rbt den Mars r\u00f6tlich.' },
+  { c: 'Weltraum', q: 'Wer betrat 1969 als erster Mensch den Mond?', a: ['Neil Armstrong', 'Juri Gagarin', 'Buzz Aldrin', 'Alexander Gerst'], e: 'Neil Armstrong stieg am 21. Juli 1969 als Erster aus der Mondf\u00e4hre. Buzz Aldrin folgte kurz danach.' },
+  { c: 'Weltraum', q: 'Wie lange braucht das Licht der Sonne ungef\u00e4hr bis zur Erde?', a: ['Etwa 8 Minuten', 'Etwa 1 Sekunde', 'Etwa 1 Stunde', 'Etwa 1 Tag'], e: 'Licht ist extrem schnell, trotzdem braucht es f\u00fcr die rund 150 Millionen Kilometer etwa 8 Minuten.' },
+  { c: 'Weltraum', q: 'Welcher Planet hat die auff\u00e4lligsten Ringe?', a: ['Saturn', 'Mars', 'Venus', 'Merkur'], e: 'Saturns Ringe bestehen aus unz\u00e4hligen Eis- und Gesteinsbrocken.' },
+  { c: 'Weltraum', q: 'Was ist die Sonne?', a: ['Ein Stern', 'Ein Planet', 'Ein Mond', 'Ein Komet'], e: 'Die Sonne ist ein Stern, der Stern, der uns am n\u00e4chsten ist.' },
+  { c: 'Weltraum', q: 'Wie hei\u00dft unsere Galaxie?', a: ['Milchstra\u00dfe', 'Andromeda', 'Orion', 'Gro\u00dfer Wagen'], e: 'Die Milchstra\u00dfe hat mehr als 100 Milliarden Sterne.' },
+  { c: 'Tierwelt', q: 'Welches ist das gr\u00f6\u00dfte Tier der Welt?', a: ['Blauwal', 'Afrikanischer Elefant', 'Wei\u00dfer Hai', 'Giraffe'], e: 'Ein Blauwal kann \u00fcber 30 Meter lang werden, l\u00e4nger als ein Basketballfeld breit ist.' },
+  { c: 'Tierwelt', q: 'Wie viele Beine hat eine Spinne?', a: ['8', '6', '10', '4'], e: 'Spinnen haben 8 Beine. Deshalb sind sie keine Insekten.' },
+  { c: 'Tierwelt', q: 'Wie viele Beine hat ein Insekt?', a: ['6', '8', '4', '10'], e: 'Alle Insekten haben 6 Beine, zum Beispiel Ameisen, Bienen und K\u00e4fer.' },
+  { c: 'Tierwelt', q: 'Welches Landtier ist am schnellsten?', a: ['Gepard', 'L\u00f6we', 'Pferd', 'Strau\u00df'], e: 'Ein Gepard schafft im Sprint gut 100 km/h, aber nur f\u00fcr kurze Zeit.' },
+  { c: 'Tierwelt', q: 'Wie viele Herzen hat ein Oktopus?', a: ['3', '1', '2', '8'], e: 'Zwei Herzen pumpen Blut durch die Kiemen, eins durch den restlichen K\u00f6rper.' },
+  { c: 'Tierwelt', q: 'Welches S\u00e4ugetier kann richtig fliegen?', a: ['Fledermaus', 'Flugh\u00f6rnchen', 'Pinguin', 'Delfin'], e: 'Flugh\u00f6rnchen gleiten nur. Flederm\u00e4use sind die einzigen S\u00e4ugetiere, die wirklich fliegen.' },
+  { c: 'Tierwelt', q: 'Was fressen Gro\u00dfe Pandas haupts\u00e4chlich?', a: ['Bambus', 'Fisch', 'Honig', 'Bananen'], e: 'Ein Panda frisst jeden Tag viele Kilo Bambus.' },
+  { c: 'Tierwelt', q: 'Welcher Vogel kann r\u00fcckw\u00e4rts fliegen?', a: ['Kolibri', 'Adler', 'Taube', 'Pinguin'], e: 'Kolibris schlagen so schnell mit den Fl\u00fcgeln, dass sie in der Luft stehen und sogar r\u00fcckw\u00e4rts fliegen k\u00f6nnen.' },
+  { c: 'Tierwelt', q: 'Welches dieser Tiere ist ein S\u00e4ugetier?', a: ['Delfin', 'Hai', 'Forelle', 'Pinguin'], e: 'Delfine atmen Luft und s\u00e4ugen ihre Jungen mit Milch.' },
+  { c: 'Tierwelt', q: 'Woraus bauen Bienen ihre Waben?', a: ['Wachs', 'Honig', 'Holz', 'Lehm'], e: 'Bienen schwitzen Wachs aus speziellen Dr\u00fcsen und formen daraus sechseckige Waben.' },
+  { c: 'Erde', q: 'Welcher ist der gr\u00f6\u00dfte Ozean der Erde?', a: ['Pazifik', 'Atlantik', 'Indischer Ozean', 'Nordpolarmeer'], e: 'Der Pazifik ist gr\u00f6\u00dfer als alle Landfl\u00e4chen der Erde zusammen.' },
+  { c: 'Erde', q: 'Welcher ist der h\u00f6chste Berg der Erde?', a: ['Mount Everest', 'Kilimandscharo', 'Mont Blanc', 'Zugspitze'], e: 'Der Mount Everest im Himalaya ist rund 8849 Meter hoch.' },
+  { c: 'Erde', q: 'Wie viele Kontinente gibt es?', a: ['7', '5', '6', '9'], e: 'Afrika, Antarktika, Asien, Australien, Europa, Nordamerika und S\u00fcdamerika.' },
+  { c: 'Erde', q: 'Welches ist das fl\u00e4chenm\u00e4\u00dfig gr\u00f6\u00dfte Land der Welt?', a: ['Russland', 'China', 'USA', 'Kanada'], e: 'Russland reicht von Europa bis an den Pazifik und hat 11 Zeitzonen.' },
+  { c: 'Erde', q: 'Welche ist die gr\u00f6\u00dfte hei\u00dfe W\u00fcste der Welt?', a: ['Sahara', 'Gobi', 'Atacama', 'Kalahari'], e: 'Die Sahara in Nordafrika ist ungef\u00e4hr so gro\u00df wie die USA.' },
+  { c: 'Erde', q: 'Welcher Kontinent ist der k\u00e4lteste?', a: ['Antarktika', 'Europa', 'Asien', 'Nordamerika'], e: 'In der Antarktis wurden schon unter minus 89 Grad gemessen.' },
+  { c: 'Erde', q: 'In welchem Land stehen die Pyramiden von Gizeh?', a: ['\u00c4gypten', 'Mexiko', 'Griechenland', 'Marokko'], e: 'Die gro\u00dfe Pyramide ist \u00fcber 4500 Jahre alt.' },
+  { c: 'Erde', q: 'Was ist die Hauptstadt von Frankreich?', a: ['Paris', 'Lyon', 'Marseille', 'Br\u00fcssel'], e: 'Paris ist bekannt f\u00fcr den Eiffelturm.' },
+  { c: 'Erde', q: 'Was ist die Hauptstadt von Spanien?', a: ['Madrid', 'Barcelona', 'Sevilla', 'Lissabon'], e: 'Madrid liegt ungef\u00e4hr in der Mitte Spaniens.' },
+  { c: 'Erde', q: 'Was ist die Hauptstadt von Afghanistan?', a: ['Kabul', 'Herat', 'Kandahar', 'Masar-e Scharif'], e: 'Kabul liegt auf rund 1800 Metern H\u00f6he zwischen Bergen.' },
+  { c: 'Erde', q: 'Welche Sprache spricht man haupts\u00e4chlich in Brasilien?', a: ['Portugiesisch', 'Spanisch', 'Englisch', 'Franz\u00f6sisch'], e: 'Brasilien war fr\u00fcher eine Kolonie Portugals.' },
+  { c: 'Deutschland', q: 'Was ist die Hauptstadt von Deutschland?', a: ['Berlin', 'Bonn', 'M\u00fcnchen', 'Hamburg'], e: 'Berlin ist auch die gr\u00f6\u00dfte Stadt Deutschlands.' },
+  { c: 'Deutschland', q: 'Wie viele Bundesl\u00e4nder hat Deutschland?', a: ['16', '12', '14', '18'], e: 'Das bev\u00f6lkerungsreichste ist Nordrhein-Westfalen.' },
+  { c: 'Deutschland', q: 'In welchem Bundesland liegt Dormagen?', a: ['Nordrhein-Westfalen', 'Niedersachsen', 'Hessen', 'Bayern'], e: 'Dormagen liegt am Rhein zwischen K\u00f6ln und D\u00fcsseldorf.' },
+  { c: 'Deutschland', q: 'Welcher Fluss flie\u00dft durch K\u00f6ln, Dormagen und D\u00fcsseldorf?', a: ['Rhein', 'Elbe', 'Donau', 'Main'], e: 'Der Rhein ist einer der wichtigsten Wasserwege Europas.' },
+  { c: 'Deutschland', q: 'Wie hei\u00dft der h\u00f6chste Berg Deutschlands?', a: ['Zugspitze', 'Brocken', 'Watzmann', 'Feldberg'], e: 'Die Zugspitze in Bayern ist knapp 2962 Meter hoch.' },
+  { c: 'Deutschland', q: 'Welche Farben hat die deutsche Flagge?', a: ['Schwarz, Rot, Gold', 'Rot, Wei\u00df, Blau', 'Schwarz, Wei\u00df, Rot', 'Gr\u00fcn, Wei\u00df, Rot'], e: 'Schwarz oben, Rot in der Mitte, Gold unten.' },
+  { c: 'Deutschland', q: 'Was feiert Deutschland am 3. Oktober?', a: ['Tag der Deutschen Einheit', 'Erntedank', 'Tag der Arbeit', 'Nikolaus'], e: 'Am 3. Oktober 1990 wurden West- und Ostdeutschland wieder ein Land.' },
+  { c: 'Deutschland', q: 'Welches Tier ist das Wappentier Deutschlands?', a: ['Adler', 'L\u00f6we', 'B\u00e4r', 'Hirsch'], e: 'Der Bundesadler ist zum Beispiel auf Euro-M\u00fcnzen zu sehen.' },
+  { c: 'K\u00f6rper', q: 'Wie viele Knochen hat ein erwachsener Mensch ungef\u00e4hr?', a: ['206', '106', '306', '56'], e: 'Babys haben sogar mehr Knochen, einige wachsen sp\u00e4ter zusammen.' },
+  { c: 'K\u00f6rper', q: 'Welches Organ pumpt das Blut durch den K\u00f6rper?', a: ['Herz', 'Lunge', 'Leber', 'Magen'], e: 'Das Herz schl\u00e4gt ungef\u00e4hr 100.000 Mal am Tag.' },
+  { c: 'K\u00f6rper', q: 'Welches ist das gr\u00f6\u00dfte Organ des Menschen?', a: ['Haut', 'Leber', 'Gehirn', 'Lunge'], e: 'Die Haut sch\u00fctzt den ganzen K\u00f6rper und ist deshalb das gr\u00f6\u00dfte Organ.' },
+  { c: 'K\u00f6rper', q: 'Wie viele Z\u00e4hne hat ein Erwachsener mit Weisheitsz\u00e4hnen?', a: ['32', '20', '28', '36'], e: 'Kinder haben 20 Milchz\u00e4hne, Erwachsene bis zu 32 bleibende Z\u00e4hne.' },
+  { c: 'K\u00f6rper', q: 'Welches Gas aus der Luft braucht unser K\u00f6rper zum Leben?', a: ['Sauerstoff', 'Kohlendioxid', 'Helium', 'Stickstoff'], e: 'Die Lunge holt Sauerstoff aus der Luft ins Blut.' },
+  { c: 'Wissenschaft', q: 'Bei wie viel Grad Celsius kocht Wasser auf Meeresh\u00f6he?', a: ['100 Grad', '50 Grad', '80 Grad', '150 Grad'], e: 'Auf hohen Bergen kocht Wasser schon fr\u00fcher, weil der Luftdruck niedriger ist.' },
+  { c: 'Wissenschaft', q: 'Bei wie viel Grad Celsius gefriert Wasser?', a: ['0 Grad', '10 Grad', 'Minus 10 Grad', '4 Grad'], e: 'Bei 0 Grad wird Wasser zu Eis.' },
+  { c: 'Wissenschaft', q: 'Welche Farbe entsteht, wenn man Blau und Gelb mischt?', a: ['Gr\u00fcn', 'Lila', 'Orange', 'Braun'], e: 'Beim Malen mit Farbe ergeben Blau und Gelb zusammen Gr\u00fcn.' },
+  { c: 'Wissenschaft', q: 'Welches Metall zieht ein Magnet an?', a: ['Eisen', 'Gold', 'Aluminium', 'Kupfer'], e: 'Eisen, Nickel und Kobalt sind magnetisch, Gold und Kupfer nicht.' },
+  { c: 'Wissenschaft', q: 'Was brauchen Pflanzen au\u00dfer Wasser und Luft, um Nahrung herzustellen?', a: ['Sonnenlicht', 'Salz', 'Zucker', 'Musik'], e: 'Mit Licht machen Pflanzen aus Wasser und Kohlendioxid Zucker. Das hei\u00dft Photosynthese.' },
+  { c: 'Wissenschaft', q: 'Wer entwickelte die ber\u00fchmte Relativit\u00e4tstheorie?', a: ['Albert Einstein', 'Isaac Newton', 'Galileo Galilei', 'Marie Curie'], e: 'Albert Einstein wurde 1879 in Ulm geboren.' },
+  { c: 'Wissenschaft', q: 'Wie viele Minuten hat ein Tag?', a: ['1440', '1000', '1200', '2400'], e: '24 Stunden mal 60 Minuten ergibt 1440 Minuten.' },
+  { c: 'Wissenschaft', q: 'Wie viele Tage hat ein Schaltjahr?', a: ['366', '365', '364', '360'], e: 'Alle vier Jahre bekommt der Februar einen 29. Tag.' },
+  { c: 'Wissenschaft', q: 'Wie viele Ecken hat ein W\u00fcrfel?', a: ['8', '6', '12', '4'], e: 'Ein W\u00fcrfel hat 8 Ecken, 12 Kanten und 6 Fl\u00e4chen.' },
+  { c: 'Geschichte', q: 'Wer malte die Mona Lisa?', a: ['Leonardo da Vinci', 'Pablo Picasso', 'Vincent van Gogh', 'Michelangelo'], e: 'Das Bild h\u00e4ngt im Louvre in Paris.' },
+  { c: 'Geschichte', q: 'Wer komponierte \u201eF\u00fcr Elise\u201c?', a: ['Ludwig van Beethoven', 'Wolfgang Amadeus Mozart', 'Johann Sebastian Bach', 'Joseph Haydn'], e: 'Beethoven wurde 1770 in Bonn geboren, ganz in der N\u00e4he von Dormagen.' },
+  { c: 'Geschichte', q: 'In welchem Jahr fiel die Berliner Mauer?', a: ['1989', '1945', '1961', '2000'], e: 'Am 9. November 1989 wurde die Grenze ge\u00f6ffnet.' },
+  { c: 'Geschichte', q: 'Welches Bauwerk wurde gebaut, um China vor Angriffen zu sch\u00fctzen?', a: ['Die Chinesische Mauer', 'Der Eiffelturm', 'Das Kolosseum', 'Die Pyramiden'], e: 'Alle Abschnitte zusammen sind viele tausend Kilometer lang.' },
+  { c: 'Geschichte', q: 'Wie oft finden die Olympischen Sommerspiele statt?', a: ['Alle 4 Jahre', 'Jedes Jahr', 'Alle 2 Jahre', 'Alle 10 Jahre'], e: 'Die ersten Olympischen Spiele der Neuzeit fanden 1896 in Athen statt.' },
+  { c: 'Geschichte', q: 'Wie viele Spieler hat eine Fu\u00dfballmannschaft auf dem Feld?', a: ['11', '9', '10', '12'], e: '10 Feldspieler und 1 Torwart.' },
+  { c: 'Geschichte', q: 'Welches Instrument hat normalerweise 88 Tasten?', a: ['Klavier', 'Gitarre', 'Geige', 'Trompete'], e: '52 wei\u00dfe und 36 schwarze Tasten.' },
+  { c: 'Geschichte', q: 'Aus wie vielen Buchstaben besteht das Alphabet ohne \u00c4, \u00d6, \u00dc und \u00df?', a: ['26', '24', '28', '30'], e: 'Von A bis Z sind es 26 Buchstaben.' },
+
+  { c: 'Weltraum', q: 'Welcher Planet ist der hei\u00dfeste in unserem Sonnensystem?', a: ['Venus', 'Merkur', 'Mars', 'Jupiter'], e: 'Die Venus hat eine dicke Wolkenh\u00fclle, die die W\u00e4rme festh\u00e4lt. Dort ist es \u00fcber 450 Grad hei\u00df, hei\u00dfer als auf dem Merkur.' },
+  { c: 'Weltraum', q: 'Wie lange braucht die Erde f\u00fcr eine Runde um die Sonne?', a: ['Ein Jahr', 'Einen Tag', 'Einen Monat', 'Eine Woche'], e: 'Die Erde braucht etwa 365 Tage und 6 Stunden. Deshalb gibt es alle vier Jahre ein Schaltjahr.' },
+  { c: 'Weltraum', q: 'Wie lange dauert es, bis sich die Erde einmal um sich selbst dreht?', a: ['Etwa 24 Stunden', 'Etwa 12 Stunden', 'Etwa eine Woche', 'Etwa ein Jahr'], e: 'Durch diese Drehung entstehen Tag und Nacht.' },
+  { c: 'Weltraum', q: 'Warum leuchtet der Mond am Himmel?', a: ['Die Sonne strahlt ihn an', 'Er brennt wie die Sonne', 'Er hat eigene Lampen', 'Er spiegelt die Erde'], e: 'Der Mond leuchtet nicht selbst. Wir sehen das Sonnenlicht, das von ihm zur\u00fcckgeworfen wird.' },
+  { c: 'Weltraum', q: 'Wer war der erste Mensch im Weltall?', a: ['Juri Gagarin', 'Neil Armstrong', 'Alexander Gerst', 'Sigmund J\u00e4hn'], e: 'Juri Gagarin umrundete am 12. April 1961 die Erde in seiner Kapsel Wostok 1.' },
+  { c: 'Weltraum', q: 'Was ist die ISS?', a: ['Eine Raumstation', 'Ein Planet', 'Ein Stern', 'Eine Mondrakete'], e: 'Die Internationale Raumstation umkreist die Erde etwa alle 90 Minuten. Auch deutsche Astronauten wie Alexander Gerst waren dort.' },
+  { c: 'Weltraum', q: 'Was ist eine Sternschnuppe?', a: ['Ein kleiner Gesteinsbrocken, der in der Luft vergl\u00fcht', 'Ein Stern, der herunterf\u00e4llt', 'Ein Flugzeug', 'Ein Blitz'], e: 'Winzige Steinchen aus dem All werden in der Lufth\u00fclle so hei\u00df, dass sie leuchten und verbrennen.' },
+  { c: 'Tierwelt', q: 'Wie nennt man die Verwandlung von der Raupe zum Schmetterling?', a: ['Metamorphose', 'Photosynthese', 'Winterschlaf', 'H\u00e4utung'], e: 'Aus dem Ei schl\u00fcpft eine Raupe, sie verpuppt sich, und aus der Puppe kommt der Schmetterling.' },
+  { c: 'Tierwelt', q: 'Womit atmen Fische?', a: ['Mit Kiemen', 'Mit einer Lunge', 'Mit der Haut', 'Mit den Flossen'], e: 'Kiemen holen den Sauerstoff aus dem Wasser.' },
+  { c: 'Tierwelt', q: 'Zu welcher Tiergruppe geh\u00f6rt der Frosch?', a: ['Amphibien', 'Reptilien', 'S\u00e4ugetiere', 'Fische'], e: 'Amphibien leben im Wasser und an Land. Kaulquappen atmen erst mit Kiemen, sp\u00e4ter mit einer Lunge.' },
+  { c: 'Tierwelt', q: 'Welches S\u00e4ugetier legt Eier?', a: ['Schnabeltier', 'K\u00e4nguru', 'Delfin', 'Maulwurf'], e: 'Das Schnabeltier aus Australien legt Eier und s\u00e4ugt seine Jungen trotzdem mit Milch.' },
+  { c: 'Tierwelt', q: 'Welches dieser Tiere h\u00e4lt Winterschlaf?', a: ['Igel', 'Reh', 'Fuchs', 'Amsel'], e: 'Der Igel schl\u00e4ft von etwa November bis M\u00e4rz. Sein Herz schl\u00e4gt dann ganz langsam.' },
+  { c: 'Tierwelt', q: 'Welches Tier hat den l\u00e4ngsten Hals?', a: ['Giraffe', 'Strau\u00df', 'Kamel', 'Flamingo'], e: 'Der Hals einer Giraffe ist etwa 2 Meter lang, hat aber nur 7 Halswirbel, genau wie unserer.' },
+  { c: 'Tierwelt', q: 'Wie viele Arme hat ein Seestern meistens?', a: ['5', '4', '6', '8'], e: 'Die meisten Seesterne haben 5 Arme. Verliert einer einen Arm, kann er nachwachsen.' },
+  { c: 'Tierwelt', q: 'Wie viele Beine hat ein Hummer?', a: ['10', '8', '6', '12'], e: 'Hummer geh\u00f6ren zu den Zehnfu\u00dfkrebsen. Die zwei vorderen Beine sind die gro\u00dfen Scheren.' },
+  { c: 'Tierwelt', q: 'Welches ist das gr\u00f6\u00dfte Raubtier an Land?', a: ['Eisb\u00e4r', 'L\u00f6we', 'Tiger', 'Wolf'], e: 'Ein ausgewachsener Eisb\u00e4r kann \u00fcber 600 Kilogramm wiegen.' },
+  { c: 'Tierwelt', q: 'Welcher Nadelbaum verliert im Herbst seine Nadeln?', a: ['L\u00e4rche', 'Fichte', 'Tanne', 'Kiefer'], e: 'Die L\u00e4rche ist der einzige heimische Nadelbaum, der im Winter kahl ist.' },
+  { c: 'Erde', q: 'Wie hei\u00dft die \u00e4u\u00dferste Schicht der Erde, auf der wir leben?', a: ['Erdkruste', 'Erdkern', 'Erdmantel', 'Atmosph\u00e4re'], e: 'Die Erdkruste ist im Vergleich zur ganzen Erde so d\u00fcnn wie die Schale eines Apfels.' },
+  { c: 'Erde', q: 'Wie nennt man ein Messger\u00e4t f\u00fcr Erdbeben?', a: ['Seismograf', 'Thermometer', 'Barometer', 'Kompass'], e: 'Ein Seismograf zeichnet auf, wie stark der Boden zittert.' },
+  { c: 'Erde', q: 'Wie viel der Erdoberfl\u00e4che ist ungef\u00e4hr mit Wasser bedeckt?', a: ['Etwa zwei Drittel', 'Etwa ein Zehntel', 'Etwa die H\u00e4lfte', 'Fast alles'], e: 'Rund 71 von 100 Teilen der Erdoberfl\u00e4che sind Wasser. Deshalb nennt man die Erde auch den Blauen Planeten.' },
+  { c: 'Erde', q: 'Wie hei\u00dft hei\u00dfes, fl\u00fcssiges Gestein, das aus einem Vulkan flie\u00dft?', a: ['Lava', 'Magnet', 'Kalk', 'Sand'], e: 'Unter der Erde hei\u00dft es Magma, sobald es herauskommt, hei\u00dft es Lava.' },
+  { c: 'Erde', q: 'In welcher Himmelsrichtung geht die Sonne auf?', a: ['Im Osten', 'Im Westen', 'Im Norden', 'Im S\u00fcden'], e: 'Die Sonne geht im Osten auf, steht mittags im S\u00fcden und geht im Westen unter.' },
+  { c: 'Erde', q: 'Wohin zeigt die Nadel eines Kompasses?', a: ['Nach Norden', 'Nach S\u00fcden', 'Nach Osten', 'Zur Sonne'], e: 'Die Magnetnadel richtet sich nach dem Magnetfeld der Erde aus.' },
+  { c: 'Deutschland', q: 'Welches ist das fl\u00e4chenm\u00e4\u00dfig gr\u00f6\u00dfte Bundesland?', a: ['Bayern', 'Nordrhein-Westfalen', 'Niedersachsen', 'Sachsen'], e: 'Bayern ist das gr\u00f6\u00dfte Bundesland, Nordrhein-Westfalen hat aber die meisten Einwohner.' },
+  { c: 'Deutschland', q: 'Was ist die Hauptstadt von Nordrhein-Westfalen?', a: ['D\u00fcsseldorf', 'K\u00f6ln', 'Dortmund', 'Bonn'], e: 'K\u00f6ln ist gr\u00f6\u00dfer, aber die Landesregierung sitzt in D\u00fcsseldorf.' },
+  { c: 'Deutschland', q: 'Welches Meer liegt im Nordwesten Deutschlands?', a: ['Nordsee', 'Mittelmeer', 'Schwarzes Meer', 'Rotes Meer'], e: 'An der Nordsee gibt es Ebbe und Flut und das Wattenmeer. Im Nordosten liegt die Ostsee.' },
+  { c: 'Deutschland', q: 'Welches ber\u00fchmte Bauwerk steht in K\u00f6ln?', a: ['Der K\u00f6lner Dom', 'Das Brandenburger Tor', 'Schloss Neuschwanstein', 'Der Eiffelturm'], e: 'Am K\u00f6lner Dom wurde \u00fcber 600 Jahre gebaut. Seine T\u00fcrme sind etwa 157 Meter hoch.' },
+  { c: 'K\u00f6rper', q: 'Wie viele Kammern hat das menschliche Herz?', a: ['4', '2', '3', '6'], e: 'Zwei Vorh\u00f6fe und zwei Herzkammern arbeiten zusammen wie eine doppelte Pumpe.' },
+  { c: 'K\u00f6rper', q: 'Was bringt den Sauerstoff im Blut zu den Zellen?', a: ['Rote Blutk\u00f6rperchen', 'Wei\u00dfe Blutk\u00f6rperchen', 'Knochen', 'Haare'], e: 'Rote Blutk\u00f6rperchen enthalten einen Farbstoff, der Sauerstoff tr\u00e4gt und das Blut rot macht.' },
+  { c: 'K\u00f6rper', q: 'Welches Vitamin bildet unsere Haut mit Hilfe von Sonnenlicht?', a: ['Vitamin D', 'Vitamin C', 'Vitamin A', 'Vitamin B'], e: 'Vitamin D ist wichtig f\u00fcr starke Knochen. Schon ein bisschen Tageslicht hilft.' },
+  { c: 'K\u00f6rper', q: 'Wie oft am Tag sollte man die Z\u00e4hne putzen?', a: ['Zweimal', 'Einmal pro Woche', 'Nur abends einmal im Monat', 'Zehnmal'], e: 'Morgens und abends jeweils etwa zwei Minuten sch\u00fctzt vor L\u00f6chern in den Z\u00e4hnen.' },
+  { c: 'K\u00f6rper', q: 'Wie viel Schlaf brauchen Grundschulkinder ungef\u00e4hr pro Nacht?', a: ['Etwa 9 bis 12 Stunden', 'Etwa 4 Stunden', 'Etwa 6 Stunden', 'Etwa 15 Stunden'], e: 'Im Schlaf w\u00e4chst der K\u00f6rper und das Gehirn sortiert, was du am Tag gelernt hast.' },
+  { c: 'K\u00f6rper', q: 'Welches ist der st\u00e4rkste Muskel im Verh\u00e4ltnis zu seiner Gr\u00f6\u00dfe?', a: ['Kaumuskel', 'Oberarmmuskel', 'Bauchmuskel', 'Fingermuskel'], e: 'Der Kaumuskel am Kiefer kann beim Zubei\u00dfen sehr viel Kraft aufbringen.' },
+  { c: 'Wissenschaft', q: 'Was ist H2O?', a: ['Wasser', 'Salz', 'Sauerstoff', 'Zucker'], e: 'Ein Wasserteilchen besteht aus zwei Wasserstoff-Atomen (H) und einem Sauerstoff-Atom (O).' },
+  { c: 'Wissenschaft', q: 'Was ist schneller: Licht oder Schall?', a: ['Licht', 'Schall', 'Beide gleich schnell', 'Das kommt auf das Wetter an'], e: 'Deshalb sieht man bei einem Gewitter erst den Blitz und h\u00f6rt danach den Donner.' },
+  { c: 'Wissenschaft', q: 'Welche Kraft l\u00e4sst einen Ball zur Erde fallen?', a: ['Die Schwerkraft', 'Die Muskelkraft', 'Die Windkraft', 'Die Magnetkraft'], e: 'Die Erde zieht alles an. Isaac Newton hat diese Kraft beschrieben.' },
+  { c: 'Wissenschaft', q: 'Welcher Stoff leitet elektrischen Strom sehr gut?', a: ['Kupfer', 'Holz', 'Gummi', 'Plastik'], e: 'Deshalb bestehen Kabel innen aus Kupfer und au\u00dfen aus Plastik, das sch\u00fctzt uns.' },
+  { c: 'Wissenschaft', q: 'Was passiert mit Wasser, wenn es gefriert?', a: ['Es dehnt sich aus', 'Es wird kleiner', 'Es wird schwerer', 'Es verschwindet'], e: 'Eis braucht mehr Platz als Wasser. Darum schwimmt Eis oben und Flaschen im Gefrierfach k\u00f6nnen platzen.' },
+  { c: 'Wissenschaft', q: 'Wie nennt man es, wenn Wasser beim Erhitzen zu Dampf wird?', a: ['Verdampfen', 'Schmelzen', 'Gefrieren', 'Kondensieren'], e: 'Wird Dampf wieder kalt, entstehen Tropfen. Das nennt man Kondensieren.' },
+  { c: 'Wissenschaft', q: 'Mit welchem Ger\u00e4t misst man die Temperatur?', a: ['Thermometer', 'Lineal', 'Waage', 'Kompass'], e: 'Das griechische Wort thermos bedeutet warm.' },
+  { c: 'Wissenschaft', q: 'Was wiegt mehr: 1 Kilogramm Federn oder 1 Kilogramm Steine?', a: ['Beide gleich viel', 'Die Steine', 'Die Federn', 'Das kann man nicht sagen'], e: 'Ein Kilogramm ist immer ein Kilogramm. Federn brauchen nur viel mehr Platz.' },
+  { c: 'Wissenschaft', q: 'Welche dieser Zahlen ist eine Primzahl?', a: ['7', '9', '15', '21'], e: 'Eine Primzahl l\u00e4sst sich nur durch 1 und sich selbst teilen: 2, 3, 5, 7, 11, 13 und so weiter.' },
+  { c: 'Wissenschaft', q: 'Wie viele Sekunden hat eine Stunde?', a: ['3600', '600', '1000', '6000'], e: '60 Minuten mal 60 Sekunden ergibt 3600 Sekunden.' },
+  { c: 'Wissenschaft', q: 'Wie viel ist ein Dutzend?', a: ['12', '10', '20', '6'], e: 'Eier werden oft im Dutzend verkauft.' },
+  { c: 'Wissenschaft', q: 'Wie hei\u00dft eine Figur mit f\u00fcnf Ecken?', a: ['F\u00fcnfeck', 'Viereck', 'Sechseck', 'Achteck'], e: 'Ein F\u00fcnfeck hei\u00dft auch Pentagon, nach dem griechischen Wort f\u00fcr f\u00fcnf.' },
+  { c: 'Geschichte', q: 'Wer erfand in Europa den Buchdruck mit beweglichen Buchstaben?', a: ['Johannes Gutenberg', 'Martin Luther', 'Albert Einstein', 'Carl Benz'], e: 'Gutenberg druckte um 1450 in Mainz. Pl\u00f6tzlich konnten B\u00fccher viel schneller hergestellt werden.' },
+  { c: 'Geschichte', q: 'Wer baute 1886 das erste Auto mit Benzinmotor?', a: ['Carl Benz', 'Henry Ford', 'Gottlieb Daimler', 'Ferdinand Porsche'], e: 'Der Benz Patent-Motorwagen hatte drei R\u00e4der und fuhr etwa 16 km/h.' },
+  { c: 'Geschichte', q: 'Woraus bauten die alten \u00c4gypter ihre Pyramiden?', a: ['Aus Steinbl\u00f6cken', 'Aus Holz', 'Aus Eisen', 'Aus Glas'], e: 'Tausende Arbeiter bewegten riesige Kalksteinbl\u00f6cke, manche so schwer wie zwei Autos.' },
+  { c: 'Geschichte', q: 'Welche Sprache sprachen die alten R\u00f6mer?', a: ['Latein', 'Griechisch', 'Italienisch', 'Englisch'], e: 'Viele deutsche W\u00f6rter kommen aus dem Latein, zum Beispiel Fenster (fenestra) und Mauer (murus).' }
+];
+var W_CATS = ['Alle', 'Weltraum', 'Tierwelt', 'Erde', 'Deutschland', 'K\u00f6rper', 'Wissenschaft', 'Geschichte'];
+var WS = { cat: 'Alle', list: [], i: 0, score: 0, cards: [], ci: 0 };
+
+function wPool(){ return WQ.filter(function(q){ return WS.cat === 'Alle' || q.c === WS.cat; }); }
+function wRenderCats(){
+  var box = document.getElementById('wCats');
+  box.innerHTML = '';
+  W_CATS.forEach(function(c){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    var n = c === 'Alle' ? WQ.length : WQ.filter(function(q){ return q.c === c; }).length;
+    b.textContent = c + ' (' + n + ')';
+    b.setAttribute('aria-pressed', c === WS.cat ? 'true' : 'false');
+    b.addEventListener('click', function(){ WS.cat = c; tone('sine', 700, 0, 0.05, 0.05); wRenderHome(); });
+    box.appendChild(b);
+  });
+}
+function wShow(part){
+  ['wHome', 'wQuiz', 'wEnd', 'wCards'].forEach(function(id){ document.getElementById(id).hidden = id !== part; });
+  document.getElementById('wCats').hidden = part === 'wQuiz' || part === 'wCards';
+}
+function wRenderHome(){
+  if (!document.getElementById('wQuiz').hidden || !document.getElementById('wCards').hidden) return;
+  wRenderCats();
+  wShow('wHome');
+  var best = lsGet('w_best_' + WS.cat, '');
+  var seen = parseInt(lsGet('w_rounds', '0'), 10);
+  document.getElementById('wStat').textContent = (best ? 'Dein Bestwert in ' + WS.cat + ': ' + best + ' von 10. ' : '') + 'Gespielte Runden insgesamt: ' + seen + '.';
+}
+function wStartQuiz(){
+  initAudio();
+  var pool = lShuffle(wPool().slice());
+  WS.list = pool.slice(0, Math.min(10, pool.length));
+  WS.i = 0; WS.score = 0;
+  wShow('wQuiz');
+  wShowQ();
+}
+function wShowQ(){
+  var q = WS.list[WS.i], total = WS.list.length;
+  document.getElementById('wqCat').textContent = q.c;
+  document.getElementById('wqNum').textContent = (WS.i + 1) + ' / ' + total;
+  document.getElementById('wqBar').style.width = (WS.i / total * 100) + '%';
+  document.getElementById('wqQ').textContent = q.q;
+  document.getElementById('wqExp').hidden = true;
+  document.getElementById('wqNext').hidden = true;
+  var opts = lShuffle(q.a.map(function(t, k){ return { t: t, ok: k === 0 }; }));
+  buildOptions(document.getElementById('wqOpts'), opts, function(btn, ok){
+    markOptions(document.getElementById('wqOpts'), btn, ok);
+    if (ok) { WS.score++; sRight(); } else sWrong();
+    var ex = document.getElementById('wqExp');
+    ex.textContent = (ok ? 'Richtig! ' : 'Leider falsch. Richtig ist: ' + q.a[0] + '. ') + q.e;
+    ex.hidden = false;
+    document.getElementById('wqBar').style.width = ((WS.i + 1) / total * 100) + '%';
+    var nx = document.getElementById('wqNext');
+    nx.textContent = WS.i === total - 1 ? 'Ergebnis anzeigen' : 'Weiter';
+    nx.hidden = false;
+    nx.focus();
+  });
+}
+function wNext(){
+  WS.i++;
+  if (WS.i < WS.list.length) { wShowQ(); return; }
+  var total = WS.list.length;
+  wShow('wEnd');
+  document.getElementById('wScore').textContent = WS.score;
+  document.querySelector('#wEnd .bigscore span').textContent = '/ ' + total;
+  var r = WS.score / total;
+  document.getElementById('wEndTxt').textContent = r >= 0.9 ? 'Wow, Wissens-Profi! Das war fast alles richtig.'
+    : r >= 0.7 ? 'Richtig stark! Du wei\u00dft schon eine Menge.'
+    : r >= 0.4 ? 'Gut gemacht! Mit den Karteikarten wirst du noch besser.'
+    : 'Jeder Profi hat mal angefangen. Schau dir die Karteikarten an und versuch es nochmal.';
+  var key = 'w_best_' + WS.cat, best = parseInt(lsGet(key, '0'), 10);
+  if (WS.score > best) lsSet(key, String(WS.score));
+  lsSet('w_rounds', String(parseInt(lsGet('w_rounds', '0'), 10) + 1));
+  if (r >= 0.7) cheer();
+}
+function wStartCards(){
+  initAudio();
+  WS.cards = lShuffle(wPool().slice());
+  WS.ci = 0;
+  wShow('wCards');
+  wShowCard();
+}
+function wShowCard(){
+  var q = WS.cards[WS.ci];
+  document.getElementById('wcCat').textContent = q.c;
+  document.getElementById('wcNum').textContent = 'Karte ' + (WS.ci + 1) + ' / ' + WS.cards.length;
+  document.getElementById('wcQ').textContent = q.q;
+  document.getElementById('wcA').textContent = q.a[0];
+  document.getElementById('wcE').textContent = q.e;
+  document.getElementById('wcAns').hidden = true;
+  document.getElementById('wcShow').hidden = false;
+  document.getElementById('wcPrev').disabled = WS.ci === 0;
+}
+document.getElementById('wQuizBtn').addEventListener('click', wStartQuiz);
+document.getElementById('wCardBtn').addEventListener('click', wStartCards);
+document.getElementById('wqNext').addEventListener('click', wNext);
+document.getElementById('wAgain').addEventListener('click', wStartQuiz);
+document.getElementById('wBack').addEventListener('click', function(){ wShow('wHome'); wRenderHome(); });
+document.getElementById('wcShow').addEventListener('click', function(){
+  document.getElementById('wcAns').hidden = false;
+  this.hidden = true;
+  tone('triangle', 988, 0, 0.12, 0.08);
+});
+document.getElementById('wcNext').addEventListener('click', function(){
+  WS.ci = (WS.ci + 1) % WS.cards.length;
+  tone('sine', 600, 900, 0.06, 0.05);
+  wShowCard();
+});
+document.getElementById('wcPrev').addEventListener('click', function(){
+  if (WS.ci > 0) { WS.ci--; wShowCard(); }
+});
+document.getElementById('wcBack').addEventListener('click', function(){ wShow('wHome'); wRenderHome(); });
+
+/* ================= MATHE KLASSE 4 (NRW) ================= */
+var PLACES = [['Einerstelle', 1, 'E'], ['Zehnerstelle', 10, 'Z'], ['Hunderterstelle', 100, 'H'], ['Tausenderstelle', 1000, 'T'], ['Zehntausenderstelle', 10000, 'ZT'], ['Hunderttausenderstelle', 100000, 'HT']];
+function stellen(n){
+  var s = [], rest = n;
+  for (var i = 5; i >= 0; i--) { var d = Math.floor(rest / PLACES[i][1]); rest -= d * PLACES[i][1]; s.push(d + ' ' + PLACES[i][2]); }
+  return s.join(' | ');
+}
+function roundTo(n, p){ return Math.round(n / p) * p; }
+function hm(m){ return Math.floor(m / 60) + ':' + (m % 60 < 10 ? '0' : '') + (m % 60) + ' Uhr'; }
+function mc(q, right, wrongs, how){ return { q: q, choices: [right].concat(wrongs), how: how }; }
+
+var M_TOPICS = [
+  { id: 'zahlen', name: 'Zahlen bis 1 Million', sub: 'Stellenwerte, Nachbarn', gen: function(){
+    var t = ri(0, 3), n;
+    if (t === 0) {
+      do { n = ri(100000, 999999); } while (/(\d).*\1/.test(String(n)));
+      var pl = PLACES[ri(0, 5)], d = Math.floor(n / pl[1]) % 10;
+      return { q: 'Welche Ziffer steht in ' + nf(n) + ' an der ' + pl[0] + '?', ans: d, how: 'Stellenwerttafel: ' + stellen(n) + '. An der ' + pl[0] + ' steht die ' + d + '.' };
+    }
+    if (t === 1) {
+      var ht = ri(1, 9), zt = ri(0, 9), th = ri(0, 9), h = ri(0, 9), e = ri(1, 9);
+      var val = ht * 100000 + zt * 10000 + th * 1000 + h * 100 + e;
+      return { q: 'Schreibe als Zahl:\n' + ht + ' HT, ' + zt + ' ZT, ' + th + ' T, ' + h + ' H, 0 Z, ' + e + ' E', ans: val, how: 'Jede Ziffer an ihre Stelle, die Zehner sind 0: ' + nf(val) + '.' };
+    }
+    if (t === 2) {
+      n = ri(10, 999) * 1000 - 1;
+      return { q: 'Welche Zahl kommt direkt nach ' + nf(n) + '?', ans: n + 1, how: nf(n) + ' + 1 = ' + nf(n + 1) + '. Die Neuner laufen \u00fcber.' };
+    }
+    n = ri(10, 999) * 1000;
+    return { q: 'Welche Zahl kommt direkt vor ' + nf(n) + '?', ans: n - 1, how: nf(n) + ' \u2212 1 = ' + nf(n - 1) + '.' };
+  } },
+  { id: 'runden', name: 'Runden & \u00dcberschlagen', sub: 'auf Hunderter, Tausender, Zehntausender', gen: function(){
+    var ps = [[100, 'Hunderter', 'Zehnerstelle'], [1000, 'Tausender', 'Hunderterstelle'], [10000, 'Zehntausender', 'Tausenderstelle']];
+    var p = ps[ri(0, 2)], n = ri(10000, 989999);
+    if (n % p[0] === 0) n += ri(1, 9) * p[0] / 10;
+    var r = roundTo(n, p[0]), next = Math.floor(n / (p[0] / 10)) % 10;
+    return { q: 'Runde ' + nf(n) + ' auf ' + p[1] + '.', ans: r, how: 'Schau auf die ' + p[2] + ': dort steht ' + next + '. ' + (next >= 5 ? 'Ab 5 wird aufgerundet' : 'Bei 0 bis 4 wird abgerundet') + ', also ' + nf(r) + '.' };
+  } },
+  { id: 'plus', name: 'Schriftlich addieren', sub: 'bis 1 000 000', gen: function(){
+    var a = ri(12000, 489999), b = ri(11000, 489999), s = a + b;
+    return { q: nf(a) + ' + ' + nf(b) + ' = ?', ans: s, how: 'Untereinander schreiben, bei den Einern anfangen und \u00dcbertr\u00e4ge merken.\n\u00dcberschlag: ' + nf(roundTo(a, 10000)) + ' + ' + nf(roundTo(b, 10000)) + ' \u2248 ' + nf(roundTo(a, 10000) + roundTo(b, 10000)) + '. Ergebnis: ' + nf(s) + '.' };
+  } },
+  { id: 'minus', name: 'Schriftlich subtrahieren', sub: 'mit Probe', gen: function(){
+    var a = ri(120000, 999999), b = ri(10000, a - 5000), d = a - b;
+    return { q: nf(a) + ' \u2212 ' + nf(b) + ' = ?', ans: d, how: 'Ergebnis: ' + nf(d) + '.\nProbe mit Plus: ' + nf(d) + ' + ' + nf(b) + ' = ' + nf(a) + '.' };
+  } },
+  { id: 'mal', name: 'Schriftlich multiplizieren', sub: 'mit ein- und zweistelligen Zahlen', gen: function(){
+    var a, b, p;
+    if (ri(0, 1) === 0) {
+      a = ri(125, 2499); b = ri(3, 9); p = a * b;
+      var hA = Math.floor(a / 100) * 100, rA = a - hA;
+      return { q: nf(a) + ' \u00b7 ' + b + ' = ?', ans: p, how: 'Zerlegen: ' + nf(hA) + ' \u00b7 ' + b + ' = ' + nf(hA * b) + ' und ' + rA + ' \u00b7 ' + b + ' = ' + nf(rA * b) + '.\nZusammen: ' + nf(p) + '.' };
+    }
+    a = ri(112, 899); b = ri(12, 49); p = a * b;
+    var z = Math.floor(b / 10) * 10, e = b - z;
+    return { q: nf(a) + ' \u00b7 ' + b + ' = ?', ans: p, how: a + ' \u00b7 ' + z + ' = ' + nf(a * z) + ' und ' + a + ' \u00b7 ' + e + ' = ' + nf(a * e) + '.\n' + nf(a * z) + ' + ' + nf(a * e) + ' = ' + nf(p) + '.' };
+  } },
+  { id: 'geteilt', name: 'Dividieren', sub: 'durch einstellige Zahlen, mit Rest', gen: function(){
+    var d = ri(3, 9), q, n;
+    if (ri(0, 3) > 0) {
+      q = ri(104, 1199); n = d * q;
+      var h = Math.floor(q / 100) * 100, rest = q - h;
+      return { q: nf(n) + ' : ' + d + ' = ?', ans: q, how: 'Zerlegen: ' + nf(h * d) + ' : ' + d + ' = ' + h + ' und ' + (rest * d) + ' : ' + d + ' = ' + rest + '.\nZusammen ' + q + '. Probe: ' + q + ' \u00b7 ' + d + ' = ' + nf(n) + '.' };
+    }
+    q = ri(21, 250); var r = ri(1, d - 1); n = d * q + r;
+    return { q: nf(n) + ' : ' + d + ' = ' + q + ' Rest ?', ans: r, how: q + ' \u00b7 ' + d + ' = ' + nf(q * d) + '. Bis ' + nf(n) + ' fehlen noch ' + r + '. Also Rest ' + r + '.' };
+  } },
+  { id: 'kopf', name: 'Kopfrechnen', sub: 'Zehner, Hunderter, Verdoppeln', gen: function(){
+    var t = ri(0, 3), a, b;
+    if (t === 0) { a = ri(2, 9) * 10; b = ri(2, 9) * 100; return { q: a + ' \u00b7 ' + b + ' = ?', ans: a * b, how: (a / 10) + ' \u00b7 ' + (b / 100) + ' = ' + (a * b / 1000) + ', dann drei Nullen anh\u00e4ngen: ' + nf(a * b) + '.' }; }
+    if (t === 1) { b = ri(3, 9); a = ri(2, 9) * 100 * b; return { q: nf(a) + ' : ' + b + ' = ?', ans: a / b, how: (a / 100) + ' : ' + b + ' = ' + (a / 100 / b) + ', dann zwei Nullen anh\u00e4ngen: ' + (a / b) + '.' }; }
+    if (t === 2) { a = ri(1200, 48000) - ri(0, 9) * 0; a = Math.round(a / 50) * 50; return { q: 'Verdopple ' + nf(a) + '.', ans: a * 2, how: nf(a) + ' + ' + nf(a) + ' = ' + nf(a * 2) + '.' }; }
+    a = ri(60, 900) * 2 * 10; return { q: 'Halbiere ' + nf(a) + '.', ans: a / 2, how: nf(a) + ' : 2 = ' + nf(a / 2) + '.' };
+  } },
+  { id: 'groessen', name: 'Gr\u00f6\u00dfen', sub: 'L\u00e4ngen, Gewichte, Zeit, Geld, Liter', gen: function(){
+    var t = ri(0, 7), x, y;
+    if (t === 0) { x = ri(1, 9); y = ri(1, 999); return { q: x + ' km ' + y + ' m = ? m', ans: x * 1000 + y, unit: 'm', how: '1 km = 1000 m. ' + x + ' km = ' + nf(x * 1000) + ' m, plus ' + y + ' m = ' + nf(x * 1000 + y) + ' m.' }; }
+    if (t === 1) { x = ri(1, 9); y = ri(5, 95); return { q: x + ' m ' + y + ' cm = ? cm', ans: x * 100 + y, unit: 'cm', how: '1 m = 100 cm. ' + x + ' m = ' + (x * 100) + ' cm, plus ' + y + ' cm = ' + (x * 100 + y) + ' cm.' }; }
+    if (t === 2) { x = ri(1, 9); y = ri(1, 9) * 50; return { q: x + ' kg ' + y + ' g = ? g', ans: x * 1000 + y, unit: 'g', how: '1 kg = 1000 g. Also ' + nf(x * 1000 + y) + ' g.' }; }
+    if (t === 3) { x = ri(2, 9); return { q: x + ' t = ? kg', ans: x * 1000, unit: 'kg', how: '1 Tonne = 1000 kg. Also ' + nf(x * 1000) + ' kg.' }; }
+    if (t === 4) { x = ri(1, 5); y = ri(1, 9) * 50; return { q: x + ' l ' + y + ' ml = ? ml', ans: x * 1000 + y, unit: 'ml', how: '1 Liter = 1000 ml. Also ' + nf(x * 1000 + y) + ' ml.' }; }
+    if (t === 5) { x = ri(1, 4); y = ri(1, 11) * 5; return { q: x + ' h ' + y + ' min = ? min', ans: x * 60 + y, unit: 'min', how: '1 Stunde = 60 Minuten. ' + x + ' h = ' + (x * 60) + ' min, plus ' + y + ' min = ' + (x * 60 + y) + ' min.' }; }
+    if (t === 6) { x = ri(3, 49); y = ri(1, 99); return { q: x + ',' + (y < 10 ? '0' : '') + y + ' \u20ac = ? ct', ans: x * 100 + y, unit: 'ct', how: '1 Euro = 100 Cent. Also ' + nf(x * 100 + y) + ' ct.' }; }
+    var s = ri(7 * 12, 14 * 12) * 5, dur = ri(7, 40) * 5;
+    return { q: 'Von ' + hm(s) + ' bis ' + hm(s + dur) + '. Wie viele Minuten sind das?', ans: dur, unit: 'min', how: 'Schrittweise weiterz\u00e4hlen: von ' + hm(s) + ' bis ' + hm(s + dur) + ' sind es ' + dur + ' Minuten.' };
+  } },
+  { id: 'geo', name: 'Geometrie', sub: 'Umfang, Fl\u00e4che, K\u00f6rper, Ma\u00dfstab', gen: function(){
+    var t = ri(0, 4), a, b;
+    if (t === 0) { a = ri(3, 19); b = ri(2, 12); return { q: 'Ein Rechteck ist ' + a + ' cm lang und ' + b + ' cm breit. Wie gro\u00df ist der Umfang?', ans: 2 * (a + b), unit: 'cm', how: 'Umfang = alle Seiten zusammen: ' + a + ' + ' + b + ' + ' + a + ' + ' + b + ' = ' + (2 * (a + b)) + ' cm.' }; }
+    if (t === 1) { a = ri(3, 12); b = ri(2, 9); return { q: 'Ein Rechteck ist ' + a + ' K\u00e4stchen lang und ' + b + ' K\u00e4stchen breit. Aus wie vielen K\u00e4stchen besteht seine Fl\u00e4che?', ans: a * b, unit: 'K\u00e4stchen', how: b + ' Reihen mit je ' + a + ' K\u00e4stchen: ' + b + ' \u00b7 ' + a + ' = ' + (a * b) + '.' }; }
+    if (t === 2) { a = ri(2, 9); return { q: 'Auf einem Plan im Ma\u00dfstab 1 : 100 ist ein Zimmer ' + a + ' cm lang. Wie viele Meter ist es in Wirklichkeit lang?', ans: a, unit: 'm', how: '1 cm auf dem Plan sind 100 cm = 1 m in Wirklichkeit. Also ' + a + ' m.' }; }
+    if (t === 3) {
+      var qs = [['Wie viele Ecken hat ein W\u00fcrfel?', '8', ['6', '12', '4'], 'Ein W\u00fcrfel hat 8 Ecken, 12 Kanten und 6 Fl\u00e4chen.'],
+                ['Wie viele Kanten hat ein Quader?', '12', ['8', '6', '10'], 'Ein Quader hat wie der W\u00fcrfel 12 Kanten, 8 Ecken und 6 Fl\u00e4chen.'],
+                ['Wie viele Fl\u00e4chen hat ein W\u00fcrfel?', '6', ['4', '8', '12'], 'Denk an einen Spielw\u00fcrfel: Augenzahlen 1 bis 6, also 6 Fl\u00e4chen.'],
+                ['Welcher K\u00f6rper hat keine Ecken und keine Kanten?', 'Kugel', ['W\u00fcrfel', 'Pyramide', 'Quader'], 'Die Kugel ist rundherum gew\u00f6lbt.'],
+                ['Welcher K\u00f6rper hat eine Spitze und eine runde Grundfl\u00e4che?', 'Kegel', ['Zylinder', 'W\u00fcrfel', 'Kugel'], 'Eine Eiswaffel hat die Form eines Kegels.']];
+      var c = qs[ri(0, qs.length - 1)];
+      return mc(c[0], c[1], c[2], c[3]);
+    }
+    a = ri(2, 12);
+    return { q: 'Ein Quadrat hat einen Umfang von ' + (4 * a) + ' cm. Wie lang ist eine Seite?', ans: a, unit: 'cm', how: 'Ein Quadrat hat 4 gleich lange Seiten: ' + (4 * a) + ' : 4 = ' + a + ' cm.' };
+  } },
+  { id: 'sach', name: 'Sachaufgaben', sub: 'Geld, Zeit, Busse, Gewichte', gen: function(){
+    var t = ri(0, 6), a, b, c;
+    if (t === 0) { a = ri(19, 29); b = ri(7, 12); return { q: 'Die Klasse 4 f\u00e4hrt mit ' + a + ' Kindern ins Trampolinzentrum. Der Eintritt kostet ' + b + ' Euro pro Kind. Wie viel Euro kostet das zusammen?', ans: a * b, unit: 'Euro', how: a + ' \u00b7 ' + b + ' = ' + (a * b) + ' Euro.' }; }
+    if (t === 1) { b = pick([32, 40, 48, 52]); a = ri(3, 6) * b - ri(4, b - 6); c = Math.ceil(a / b); return { q: 'Ein Bus hat ' + b + ' Pl\u00e4tze. Wie viele Busse braucht man f\u00fcr ' + a + ' Kinder?', ans: c, unit: 'Busse', how: (c - 1) + ' Busse haben nur ' + ((c - 1) * b) + ' Pl\u00e4tze. Das reicht nicht, also braucht man ' + c + ' Busse.' }; }
+    if (t === 2) { a = pick([20, 30, 50]); b = ri(3, 9); c = ri(2, 6); var d = a - b - 2 * c; if (d < 0) { a = 50; d = a - b - 2 * c; } return { q: 'Mia hat ' + a + ' Euro. Sie kauft ein Buch f\u00fcr ' + b + ' Euro und zwei Stifte f\u00fcr je ' + c + ' Euro. Wie viel Geld bleibt \u00fcbrig?', ans: d, unit: 'Euro', how: 'Ausgaben: ' + b + ' + 2 \u00b7 ' + c + ' = ' + (b + 2 * c) + ' Euro. ' + a + ' \u2212 ' + (b + 2 * c) + ' = ' + d + ' Euro.' }; }
+    if (t === 3) { a = ri(8 * 12, 10 * 12) * 5; b = ri(10, 30) * 5; return { q: 'Ein Zug f\u00e4hrt um ' + hm(a) + ' ab und kommt um ' + hm(a + b) + ' an. Wie viele Minuten dauert die Fahrt?', ans: b, unit: 'min', how: 'Von ' + hm(a) + ' bis ' + hm(a + b) + ' sind es ' + b + ' Minuten.' }; }
+    if (t === 4) { a = pick([25, 50]); b = ri(4, 16); return { q: 'Ein Schwimmbecken ist ' + a + ' m lang. Tim schwimmt ' + b + ' Bahnen. Wie viele Meter sind das?', ans: a * b, unit: 'm', how: b + ' \u00b7 ' + a + ' = ' + (a * b) + ' m.' }; }
+    if (t === 5) { a = ri(1, 4); b = ri(1, 9) * 100; c = ri(2, 5); var g = (a * 1000 + b) * c; return { q: 'Ein Paket wiegt ' + a + ' kg ' + b + ' g. Wie viel Gramm wiegen ' + c + ' gleiche Pakete zusammen?', ans: g, unit: 'g', how: 'Ein Paket: ' + nf(a * 1000 + b) + ' g. Mal ' + c + ' = ' + nf(g) + ' g.' }; }
+    a = ri(2, 6) * 2; b = ri(4, 9) * 10;
+    var full = Math.floor(b / a), rs = b % a, days = Math.ceil(b / a);
+    return { q: 'Ein Heft hat ' + b + ' Seiten. Lara schreibt jeden Tag ' + a + ' Seiten. Nach wie vielen Tagen ist das Heft voll?', ans: days, unit: 'Tage', how: b + ' : ' + a + ' = ' + full + (rs ? ' Rest ' + rs + '. F\u00fcr die letzten ' + rs + ' Seiten braucht sie noch einen Tag, also ' + days + ' Tage.' : '. Also ' + days + ' Tage.') };
+  } },
+  { id: 'daten', name: 'Daten & Zufall', sub: 'Tabellen, sicher, m\u00f6glich, unm\u00f6glich', gen: function(){
+    var t = ri(0, 2);
+    if (t === 0) {
+      var r = ri(4, 12), bl = ri(1, 3), ask = ri(0, 3);
+      var labels = ['sicher', 'wahrscheinlich', 'unwahrscheinlich', 'unm\u00f6glich'];
+      var qs = [['rot', 1, 'Es gibt ' + r + ' rote und nur ' + bl + ' blaue Kugeln. Rot ist also wahrscheinlich.'],
+                ['blau', 2, 'Es gibt nur ' + bl + ' blaue Kugeln, aber ' + r + ' rote. Blau ist unwahrscheinlich, aber m\u00f6glich.'],
+                ['gr\u00fcn', 3, 'Im Beutel ist keine gr\u00fcne Kugel. Das ist unm\u00f6glich.'],
+                ['rot oder blau', 0, 'Alle Kugeln sind rot oder blau. Das ist sicher.']];
+      var c = qs[ask];
+      var wrong = labels.filter(function(l, i){ return i !== c[1]; });
+      return mc('In einem Beutel sind ' + r + ' rote und ' + bl + ' blaue Kugeln. Du ziehst ohne hinzusehen eine Kugel.\nDass sie ' + c[0] + ' ist, ist ...', labels[c[1]], wrong, c[2]);
+    }
+    var sp = ['Fu\u00dfball', 'Schwimmen', 'Turnen', 'Trampolin'], v = lShuffle([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).slice(0, 4);
+    var table = 'Lieblingssport der Klasse:\n' + sp.map(function(s, i){ return s + ': ' + v[i]; }).join('\n');
+    if (t === 1) {
+      var sum = v[0] + v[1] + v[2] + v[3];
+      return { q: table + '\nWie viele Kinder wurden insgesamt befragt?', ans: sum, unit: 'Kinder', how: v.join(' + ') + ' = ' + sum + '.' };
+    }
+    var i1 = ri(0, 3), i2 = (i1 + ri(1, 3)) % 4;
+    var hi = v[i1] > v[i2] ? i1 : i2, lo = hi === i1 ? i2 : i1;
+    return { q: table + '\nWie viele Kinder mehr m\u00f6gen ' + sp[hi] + ' als ' + sp[lo] + '?', ans: v[hi] - v[lo], unit: 'Kinder', how: v[hi] + ' \u2212 ' + v[lo] + ' = ' + (v[hi] - v[lo]) + '.' };
+  } }
+];
+var MS = { topic: null, i: 0, score: 0, task: null, answered: false };
+function mBestKey(id){ return 'm_best_' + id; }
+function mRenderTopics(){
+  if (!document.getElementById('mPlay').hidden) return;
+  document.getElementById('mEnd').hidden = true;
+  var box = document.getElementById('mTopics');
+  box.hidden = false;
+  box.innerHTML = '';
+  var all = M_TOPICS.concat([{ id: 'mix', name: 'Gemischte Runde', sub: 'Aufgaben aus allen Themen' }]);
+  all.forEach(function(t){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'topic' + (t.id === 'mix' ? ' mix' : '');
+    var best = lsGet(mBestKey(t.id), '');
+    var n1 = document.createElement('b'); n1.textContent = t.name;
+    var n2 = document.createElement('small'); n2.textContent = t.sub + (best ? ' \u00b7 Bestwert ' + best + '/10' : '');
+    b.appendChild(n1); b.appendChild(n2);
+    b.addEventListener('click', function(){ mStart(t.id); });
+    box.appendChild(b);
+  });
+}
+function mStart(id){
+  initAudio();
+  MS.topic = id; MS.i = 0; MS.score = 0;
+  document.getElementById('mTopics').hidden = true;
+  document.getElementById('mEnd').hidden = true;
+  document.getElementById('mPlay').hidden = false;
+  mNewTask();
+}
+function mTopicById(id){ for (var i = 0; i < M_TOPICS.length; i++) if (M_TOPICS[i].id === id) return M_TOPICS[i]; return null; }
+function mNewTask(){
+  var topic = MS.topic === 'mix' ? M_TOPICS[ri(0, M_TOPICS.length - 1)] : mTopicById(MS.topic);
+  var task = topic.gen();
+  task.topicName = topic.name;
+  MS.task = task; MS.answered = false;
+  document.getElementById('mpTopic').textContent = topic.name;
+  document.getElementById('mpNum').textContent = 'Aufgabe ' + (MS.i + 1) + ' / 10';
+  document.getElementById('mpBar').style.width = (MS.i * 10) + '%';
+  document.getElementById('mpQ').textContent = task.q;
+  document.getElementById('mpFb').hidden = true;
+  document.getElementById('mpNext').hidden = true;
+  var form = document.getElementById('mpForm'), opts = document.getElementById('mpOpts');
+  if (task.choices) {
+    form.hidden = true; opts.hidden = false;
+    var list = lShuffle(task.choices.map(function(t, k){ return { t: t, ok: k === 0 }; }));
+    buildOptions(opts, list, function(btn, ok){ if (MS.answered) return; markOptions(opts, btn, ok); mResult(ok, task.choices[0]); });
+  } else {
+    opts.hidden = true; form.hidden = false;
+    var inp = document.getElementById('mpInput');
+    inp.value = ''; inp.disabled = false;
+    document.getElementById('mpCheck').disabled = false;
+    document.getElementById('mpUnit').textContent = task.unit || '';
+    setTimeout(function(){ try { inp.focus({ preventScroll: true }); } catch (e) {} }, 50);
+  }
+}
+function mResult(ok, rightText){
+  MS.answered = true;
+  if (ok) { MS.score++; sRight(); } else sWrong();
+  var fb = document.getElementById('mpFb');
+  fb.className = 'mfb ' + (ok ? 'ok' : 'bad');
+  fb.innerHTML = '';
+  var head = document.createElement('b');
+  head.textContent = ok ? 'Richtig!' : 'Nicht ganz. Richtig ist: ' + rightText;
+  fb.appendChild(head);
+  fb.appendChild(document.createTextNode('Rechenweg: ' + MS.task.how));
+  fb.hidden = false;
+  document.getElementById('mpBar').style.width = ((MS.i + 1) * 10) + '%';
+  var nx = document.getElementById('mpNext');
+  nx.textContent = MS.i === 9 ? 'Ergebnis anzeigen' : 'N\u00e4chste Aufgabe';
+  nx.hidden = false;
+  nx.focus();
+}
+document.getElementById('mpForm').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  if (MS.answered) return;
+  var inp = document.getElementById('mpInput');
+  var raw = inp.value.replace(/[\s.\u00a0]/g, '');
+  if (!/^\d+$/.test(raw)) {
+    var fb = document.getElementById('mpFb');
+    fb.className = 'mfb bad'; fb.textContent = 'Bitte gib eine ganze Zahl ein.'; fb.hidden = false;
+    inp.focus();
+    return;
+  }
+  inp.disabled = true;
+  document.getElementById('mpCheck').disabled = true;
+  var t = MS.task;
+  mResult(parseInt(raw, 10) === t.ans, nf(t.ans) + (t.unit ? ' ' + t.unit : ''));
+});
+document.getElementById('mpNext').addEventListener('click', function(){
+  MS.i++;
+  if (MS.i < 10) { mNewTask(); return; }
+  document.getElementById('mPlay').hidden = true;
+  document.getElementById('mEnd').hidden = false;
+  document.getElementById('mScore').textContent = MS.score;
+  document.getElementById('mEndTxt').textContent = MS.score >= 9 ? 'Mathe-Profi! Fast alles richtig.'
+    : MS.score >= 7 ? 'Super gerechnet!'
+    : MS.score >= 5 ? 'Gut! Schau dir die Rechenwege an, dann klappt es noch besser.'
+    : '\u00dcbung macht den Meister. Probier gleich noch eine Runde.';
+  var best = parseInt(lsGet(mBestKey(MS.topic), '0'), 10);
+  if (MS.score > best) lsSet(mBestKey(MS.topic), String(MS.score));
+  if (MS.score >= 7) cheer();
+});
+document.getElementById('mpQuit').addEventListener('click', function(){
+  document.getElementById('mPlay').hidden = true;
+  mRenderTopics();
+});
+document.getElementById('mAgain').addEventListener('click', function(){ mStart(MS.topic); });
+document.getElementById('mBack').addEventListener('click', function(){ document.getElementById('mEnd').hidden = true; mRenderTopics(); });
 
 /* ================= COUNTDOWN ================= */
 var START = new Date(2026, 9, 3, 15, 0, 0).getTime();
@@ -1246,6 +1935,7 @@ function updateKidAnim(k, dt){
 }
 
 function frame(now){
+  if (document.getElementById('stageView').hidden) { lastT = 0; requestAnimationFrame(frame); return; }
   if (!lastT) lastT = now;
   var dt = Math.min(0.033, (now - lastT) / 1000);
   lastT = now;
@@ -1290,3 +1980,5 @@ function startGame(){
 }
 })();
 </script>
+</body>
+</html>
