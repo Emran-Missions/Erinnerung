@@ -1,403 +1,1292 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HI-FLY HILDEN - CHALLENGE & REMINDER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --neon-blue: #00f0ff;
-            --neon-pink: #ff007f;
-            --neon-yellow: #ffe600;
-            --neon-green: #00ff9d;
-            --bg-dark: #060913;
-        }
+<title>HI-FLY Hilden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: one narrow arcade column - math gate first, then countdown, trampoline stage and event facts */
+:root{
+  --bg:#070918;
+  --bg2:#0c1030;
+  --panel:rgba(14,17,42,.9);
+  --line:rgba(130,150,255,.22);
+  --pink:#ff2e88;
+  --cyan:#22e4ff;
+  --yellow:#ffd23f;
+  --green:#3dffa8;
+  --danger:#ff6b7a;
+  --text:#eef1ff;
+  --muted:#9ea7cc;
+  --ink:#1a0a14;
+  --display:'Fredoka','Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html{background:var(--bg)}
+body{
+  background:
+    radial-gradient(ellipse 80% 45% at 50% 0%,rgba(255,46,136,.22),transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 90%,rgba(34,228,255,.16),transparent 70%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.5;
+  min-height:100vh;
+  padding-inline:16px;
+  padding-block:18px 32px;
+}
+*{box-sizing:border-box}
+.app{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-family:var(--display);font-weight:700;letter-spacing:.08em;font-size:1rem}
+.brand b{color:var(--pink);font-weight:700}
+.iconbtn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:6px 12px;font:600 .85rem var(--display);cursor:pointer}
+.iconbtn svg{width:16px;height:16px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 24px 60px -24px rgba(0,0,0,.7);overflow:hidden}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--cyan))}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);background:rgba(34,228,255,.1);border:1px solid rgba(34,228,255,.35);padding:4px 11px;border-radius:999px}
+h1,h2{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,9vw,2.9rem);line-height:1.02;margin-top:12px}
+h1 span{color:var(--pink)}
+h2{font-size:clamp(1.3rem,5.4vw,1.6rem);line-height:1.15;margin-top:10px}
+.lead{color:var(--muted);margin:8px 0 18px;font-weight:700}
+.task{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.task-cat{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);font-weight:800}
+.task-q{font-family:var(--display);font-weight:600;font-size:clamp(2rem,9vw,2.6rem);line-height:1.15;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.task-q.long{font-family:var(--body);font-weight:700;font-size:clamp(1.1rem,4.6vw,1.3rem);line-height:1.45}
+.answer{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.field{flex:1 1 170px;display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.45);border:2px solid rgba(34,228,255,.45);border-radius:14px;padding:0 14px;min-width:0;transition:border-color .15s,box-shadow .15s}
+.field:focus-within{border-color:var(--green);box-shadow:0 0 0 4px rgba(61,255,168,.14)}
+.field input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--text);font:600 1.45rem var(--display);padding:11px 0;font-variant-numeric:tabular-nums}
+.field input::placeholder{color:var(--muted);opacity:.6}
+.unit{color:var(--muted);font-weight:800;white-space:nowrap}
+.btn{flex:1 1 150px;border:0;border-radius:14px;padding:14px 18px;font:700 1.05rem var(--display);color:var(--ink);background:linear-gradient(95deg,var(--pink),var(--yellow));cursor:pointer;box-shadow:0 12px 26px -12px rgba(255,46,136,.8);transition:transform .12s,filter .12s}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn:focus-visible,.iconbtn:focus-visible,.linkbtn:focus-visible,.ghost:focus-visible,.stage:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.feedback{min-height:1.5em;margin-top:12px;font-weight:800}
+.feedback.ok{color:var(--green)}
+.feedback.bad{color:var(--danger)}
+.linkbtn{background:none;border:0;color:var(--muted);font:700 .92rem var(--body);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 0;margin-top:4px}
+.shake{animation:shake .42s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.pop{animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(.9)}100%{transform:scale(1)}}
+.timer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+.tcell{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center}
+.tnum{font:700 clamp(1.5rem,7.5vw,2.2rem) var(--display);line-height:1.1;font-variant-numeric:tabular-nums;color:var(--green)}
+.tlab{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.status{margin-top:10px;color:var(--yellow);font-weight:800}
+.stage-card{padding:12px}
+.stage{position:relative;width:100%;aspect-ratio:440/360;border-radius:16px;overflow:hidden;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;background:var(--bg2)}
+.stage canvas{display:block;width:100%;height:100%}
+.hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
+.chip{background:rgba(7,9,24,.72);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font:600 .8rem var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip b{color:var(--green);font-weight:700}
+.chip.rec b{color:var(--yellow)}
+.combo{position:absolute;top:42px;left:50%;transform:translateX(-50%);font:700 1rem var(--display);color:var(--ink);background:var(--yellow);border-radius:999px;padding:2px 12px;pointer-events:none;transition:opacity .2s}
+.combo[hidden]{display:none}
+.toast{position:absolute;left:12px;right:12px;bottom:12px;margin:0 auto;width:fit-content;max-width:calc(100% - 24px);text-align:center;font:700 .95rem var(--display);color:var(--text);background:rgba(7,9,24,.82);border:1px solid var(--cyan);border-radius:999px;padding:5px 14px;pointer-events:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+.hint{margin:12px 6px 4px;color:var(--muted);font-weight:800;font-size:.95rem;text-align:center;min-height:2.9em;text-wrap:balance}
+.info dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 16px;margin:14px 0 0}
+.info dt{color:var(--muted);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;padding-top:3px}
+.info dd{margin:0;font-weight:700}
+.info dd small{display:block;color:var(--muted);font-weight:700}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.ghost{flex:1 1 150px;text-align:center;text-decoration:none;border-radius:12px;padding:11px 14px;font:600 .95rem var(--display);color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--line);cursor:pointer}
+.ghost:hover{border-color:var(--cyan)}
+@media (prefers-reduced-motion:reduce){.shake,.pop{animation:none}}
+</style>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+<div class="app">
+  <div class="topbar">
+    <div class="brand">HI-FLY <b>HILDEN</b></div>
+    <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path id="soundWave" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      <span id="soundLabel">Ton an</span>
+    </button>
+  </div>
 
-        body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            font-family: 'Rajdhani', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            padding: 15px;
-            background-image: 
-                radial-gradient(circle at 50% 10%, rgba(255, 0, 127, 0.25), transparent 60%),
-                radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.2), transparent 50%);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            background: rgba(15, 23, 42, 0.88);
-            border: 2px solid var(--neon-pink);
-            border-radius: 20px;
-            padding: 22px;
-            box-shadow: 0 0 35px rgba(255, 0, 127, 0.3);
-            backdrop-filter: blur(15px);
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
-            color: #000;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 0.75rem;
-            padding: 5px 12px;
-            border-radius: 20px;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff, var(--neon-blue), var(--neon-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
-
-        .input-group {
-            margin: 20px 0;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--neon-blue);
-            border-radius: 12px;
-            color: #fff;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.1rem;
-            text-align: center;
-            outline: none;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow));
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-        }
-
-        /* TIMER STYLES */
-        .timer-subtitle {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.2rem;
-            color: var(--neon-yellow);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .timer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .time-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--neon-blue);
-            border-radius: 10px;
-            padding: 8px 4px;
-        }
-
-        .time-num {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--neon-green);
-        }
-
-        .time-label {
-            font-size: 0.7rem;
-            color: #8faec4;
-        }
-
-        /* ADVANCED TRAMPOLINE GAME */
-        .jump-zone {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px dashed var(--neon-green);
-            border-radius: 15px;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .height-gauge {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-            color: var(--neon-blue);
-        }
-
-        .jump-hint {
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            font-size: 0.85rem;
-            color: var(--neon-yellow);
-        }
-
-        .jumper {
-            font-size: 3rem;
-            position: absolute;
-            bottom: 20px;
-            transition: transform 0.1s ease-out;
-            filter: drop-shadow(0 0 12px var(--neon-blue));
-        }
-
-        .trampoline-bed {
-            width: 85%;
-            height: 12px;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 15px var(--neon-pink);
-            transition: transform 0.08s ease;
-        }
-
-        .info-box {
-            background: rgba(0, 240, 255, 0.07);
-            border: 1px dashed var(--neon-blue);
-            border-radius: 10px;
-            padding: 12px;
-            text-align: left;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        .hidden { display: none !important; }
-    </style>
-</head>
-<body onclick="initAudio()">
-
-    <div class="container">
-        <!-- CHALLENGE VIEW -->
-        <div id="challengeView">
-            <div class="badge">🔒 SECURITY CHALLENGE</div>
-            <h1>HI-FLY HILDEN</h1>
-            <p style="color: #c2e9fb; margin-top: 10px;">برای ورود به برنامه، به سؤال زیر پاسخ دهید:</p>
-            
-            <div class="input-group">
-                <p style="color: var(--neon-yellow); font-weight: bold; margin-bottom: 8px;">
-                    یکی از خصوصیات یا ویژگی‌های عمران را بنویسید:
-                </p>
-                <input type="text" id="traitInput" placeholder="مثلاً: مهربان، شجاع، شوخ...">
-            </div>
-            
-            <button class="btn" onclick="checkChallenge()">ورود به برنامه 🚀</button>
-        </div>
-
-        <!-- MAIN APP VIEW -->
-        <div id="mainView" class="hidden">
-            <div class="badge">🚀 HI-FLY & TRAMPOLINO HILDEN</div>
-            
-            <div class="timer-subtitle">⏱️ تایمر معکوس تا پرش دسته‌جمعی ما:</div>
-
-            <div class="timer-grid">
-                <div class="time-card">
-                    <div class="time-num" id="days">00</div>
-                    <div class="time-label">روز</div>
-                </div>
-                <div class="time-card">
-                    <div class="time-num" id="hours">00</div>
-                    <div class="time-label">ساعت</div>
-                </div>
-                <div class="time-card">
-                    <div class="time-num" id="minutes">00</div>
-                    <div class="time-label">دقیقه</div>
-                </div>
-                <div class="time-card">
-                    <div class="time-num" id="seconds">00</div>
-                    <div class="time-label">ثانیه</div>
-                </div>
-            </div>
-
-            <!-- INTERACTIVE TRAMPOLINE GAME -->
-            <div class="jump-zone" onclick="boostJump()">
-                <div class="jump-hint">👇 ضربه بزن تا بپری!</div>
-                <div class="height-gauge">ارتفاع: <span id="heightNum" style="color:var(--neon-green)">0</span>m</div>
-                <div class="jumper" id="jumper">😔</div>
-                <div class="trampoline-bed" id="trampBed"></div>
-            </div>
-
-            <div class="info-box">
-                📍 <b>مکان:</b> Kleinhülsen 17, 40721 Hilden<br>
-                📅 <b>زمان:</b> شنبه، ۳ اکتبر ۲۰۲۶ (۱۵:۰۰ تا ۱۹:۰۰)
-            </div>
-        </div>
+  <!-- MATH GATE -->
+  <section class="card" id="gateView">
+    <span class="pill">Zugangs-Check</span>
+    <h1>Mathe-Tor <span>zur Halle</span></h1>
+    <p class="lead">L&ouml;se die Aufgabe richtig, dann geht die T&uuml;r auf.</p>
+    <div class="task" id="taskBox">
+      <div class="task-cat" id="taskCat">Malnehmen</div>
+      <div class="task-q" id="taskQ">7 &middot; 24 = ?</div>
     </div>
+    <form class="answer" id="answerForm" autocomplete="off">
+      <label class="field" for="answerInput">
+        <input id="answerInput" type="text" inputmode="numeric" placeholder="?" aria-label="Deine Antwort">
+        <span class="unit" id="taskUnit"></span>
+      </label>
+      <button class="btn" id="checkBtn" type="submit">Antwort pr&uuml;fen</button>
+    </form>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <button class="linkbtn" id="newTaskBtn" type="button">Andere Aufgabe</button>
+  </section>
 
-    <script>
-        let audioCtx = null;
-        let jumpPower = 0;
-        let lastTapTime = 0;
-        let resetTimer = null;
+  <!-- MAIN VIEW -->
+  <section class="card" id="countView" hidden>
+    <span class="pill">HI-FLY &amp; Trampolino Hilden</span>
+    <h2>Countdown zum Gruppensprung</h2>
+    <div class="timer" role="timer" aria-live="off">
+      <div class="tcell"><div class="tnum" id="tDays">00</div><div class="tlab">Tage</div></div>
+      <div class="tcell"><div class="tnum" id="tHours">00</div><div class="tlab">Stunden</div></div>
+      <div class="tcell"><div class="tnum" id="tMins">00</div><div class="tlab">Minuten</div></div>
+      <div class="tcell"><div class="tnum" id="tSecs">00</div><div class="tlab">Sekunden</div></div>
+    </div>
+    <div class="status" id="countStatus">Samstag, 3. Oktober 2026 um 15:00 Uhr</div>
+  </section>
 
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-        }
+  <section class="card stage-card" id="stageView" hidden>
+    <div class="stage" id="stage" tabindex="0" role="button" aria-label="Trampolin: tippen oder Leertaste zum Springen">
+      <canvas id="cv" aria-hidden="true"></canvas>
+      <div class="hud">
+        <span class="chip">H&ouml;he <b id="hudH">0,0</b> m</span>
+        <span class="chip rec">Rekord <b id="hudRec">0,0</b> m</span>
+      </div>
+      <div class="combo" id="hudCombo" hidden>Combo x2</div>
+      <div class="toast" id="toast" hidden></div>
+    </div>
+    <p class="hint" id="hint">Tippe aufs Trampolin, um zu springen.</p>
+  </section>
 
-        function playSpringSound(pitchMultiplier) {
-            initAudio();
-            if(!audioCtx) return;
+  <section class="card info" id="infoView" hidden>
+    <span class="pill">Treffpunkt</span>
+    <dl>
+      <dt>Ort</dt>
+      <dd id="addr">Kleinh&uuml;lsen 17, 40721 Hilden</dd>
+      <dt>Wann</dt>
+      <dd>Samstag, 3. Oktober 2026<small>15:00 bis 19:00 Uhr &middot; Feiertag (Tag der Deutschen Einheit)</small></dd>
+      <dt>Tipp</dt>
+      <dd>Rutschfeste Socken sind im gebuchten Paket enthalten, ihr m&uuml;sst keine mitbringen.</dd>
+    </dl>
+    <div class="actions">
+      <a class="ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Kleinh%C3%BClsen%2017%2C%2040721%20Hilden" target="_blank" rel="noopener">Route planen</a>
+      <button class="ghost" id="copyBtn" type="button">Adresse kopieren</button>
+    </div>
+  </section>
+</div>
 
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
+<script>
+(function(){
+'use strict';
 
-            osc.type = 'sine';
-            const baseFreq = 160 + (pitchMultiplier * 40);
-            osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(baseFreq * 3, audioCtx.currentTime + 0.12);
-            osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.5, audioCtx.currentTime + 0.25);
+/* ================= AUDIO ================= */
+var ac = null;
+var soundOn = true;
 
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+function initAudio(){
+  if (!soundOn) return;
+  try {
+    if (!ac) {
+      var C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return;
+      ac = new C();
+    }
+    if (ac.state === 'suspended') ac.resume();
+  } catch (e) {}
+}
 
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+function tone(type, f0, f1, dur, vol, delay){
+  if (!soundOn || !ac) return;
+  try {
+    var t = ac.currentTime + (delay || 0);
+    var o = ac.createOscillator();
+    var g = ac.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f0, t);
+    if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g);
+    g.connect(ac.destination);
+    o.start(t);
+    o.stop(t + dur + 0.03);
+  } catch (e) {}
+}
 
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.25);
-        }
+function sBoing(p){
+  var b = 150 + p * 26;
+  tone('sine', b, b * 2.7, 0.15, 0.26);
+  tone('sine', b * 2.7, b * 1.3, 0.2, 0.1, 0.13);
+}
+function sThud(v){ tone('sine', 120, 45, 0.14, Math.min(0.32, 0.04 + v / 4000)); }
+function sPerfect(){ tone('triangle', 880, 0, 0.12, 0.16); tone('triangle', 1320, 0, 0.2, 0.16, 0.09); }
+function sEarly(){ tone('square', 230, 170, 0.08, 0.04); }
+function sRight(){ var n = [523, 659, 784, 1047]; for (var i = 0; i < n.length; i++) tone('triangle', n[i], 0, 0.22, 0.16, i * 0.09); }
+function sWrong(){ tone('sawtooth', 210, 110, 0.3, 0.07); }
+function sRecord(){ var n = [784, 988, 1175, 1568]; for (var i = 0; i < n.length; i++) tone('sine', n[i], 0, 0.18, 0.12, i * 0.07); }
 
-        function playTickSound() {
-            initAudio();
-            if(!audioCtx) return;
+var soundBtn = document.getElementById('soundBtn');
+soundBtn.addEventListener('click', function(){
+  soundOn = !soundOn;
+  soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+  document.getElementById('soundLabel').textContent = soundOn ? 'Ton an' : 'Ton aus';
+  document.getElementById('soundWave').style.display = soundOn ? '' : 'none';
+  if (soundOn) initAudio();
+});
+document.addEventListener('pointerdown', initAudio, { passive: true });
 
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.03);
-        }
+/* ================= MATH GATE ================= */
+function ri(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
 
-        function checkChallenge() {
-            const answer = document.getElementById('traitInput').value.trim();
-            if (answer.length > 0) {
-                document.getElementById('challengeView').classList.add('hidden');
-                document.getElementById('mainView').classList.remove('hidden');
-                startCountdown();
-            } else {
-                alert('لطفاً یکی از خصوصیات عمران را بنویسید!');
-            }
-        }
+var GEN = {
+  mul: function(){ var a = ri(3, 9), b = ri(12, 29); return { cat: 'Malnehmen', q: a + ' \u00b7 ' + b + ' = ?', ans: a * b }; },
+  mul10: function(){ var a = ri(3, 9), b = ri(2, 9) * 10; return { cat: 'Malnehmen mit Zehnern', q: a + ' \u00b7 ' + b + ' = ?', ans: a * b }; },
+  div: function(){ var b = ri(3, 9), q = ri(12, 40); return { cat: 'Teilen', q: (b * q) + ' : ' + b + ' = ?', ans: q }; },
+  add: function(){ var a = ri(125, 560), b = ri(118, 420); return { cat: 'Plus', q: a + ' + ' + b + ' = ?', ans: a + b }; },
+  sub: function(){ var a = ri(420, 990), b = ri(115, a - 60); return { cat: 'Minus', q: a + ' \u2212 ' + b + ' = ?', ans: a - b }; },
+  half: function(){ var n = ri(60, 480) * 2; return { cat: 'Halbieren', q: 'Die H\u00e4lfte von ' + n + ' ist ?', ans: n / 2 }; },
+  dbl: function(){ var n = ri(115, 480); return { cat: 'Verdoppeln', q: 'Das Doppelte von ' + n + ' ist ?', ans: n * 2 }; },
+  missing: function(){ var a = ri(140, 520), b = ri(60, 400); return { cat: 'Platzhalter', q: a + ' + ? = ' + (a + b), ans: b }; },
+  units: function(){
+    return pick([
+      function(){ var h = ri(2, 5); return { cat: 'Gr\u00f6\u00dfen', q: 'Wie viele Minuten sind ' + h + ' Stunden?', ans: h * 60, unit: 'min', long: true }; },
+      function(){ var k = ri(2, 9); return { cat: 'Gr\u00f6\u00dfen', q: 'Wie viele Meter sind ' + k + ' Kilometer?', ans: k * 1000, unit: 'm', long: true }; },
+      function(){ var m = ri(2, 9); return { cat: 'Gr\u00f6\u00dfen', q: 'Wie viele Zentimeter sind ' + m + ' Meter?', ans: m * 100, unit: 'cm', long: true }; },
+      function(){ var k = ri(2, 6); return { cat: 'Gr\u00f6\u00dfen', q: 'Wie viele Gramm sind ' + k + ' Kilogramm?', ans: k * 1000, unit: 'g', long: true }; }
+    ])();
+  },
+  word: function(){
+    return pick([
+      function(){ var p = ri(7, 12), n = ri(3, 8); return { cat: 'Textaufgabe', q: 'Ein Ticket f\u00fcr die Trampolinhalle kostet ' + p + ' Euro. Wie viel kosten ' + n + ' Tickets zusammen?', ans: p * n, unit: 'Euro', long: true }; },
+      function(){ var n = ri(4, 9), k = ri(12, 25); return { cat: 'Textaufgabe', q: n + ' Kinder springen jeweils ' + k + ' Mal. Wie viele Spr\u00fcnge sind das zusammen?', ans: n * k, unit: 'Spr\u00fcnge', long: true }; },
+      function(){ var a = ri(120, 300), b = ri(35, a - 40); return { cat: 'Textaufgabe', q: 'In der Halle sind ' + a + ' Kinder. ' + b + ' Kinder gehen nach Hause. Wie viele Kinder bleiben?', ans: a - b, unit: 'Kinder', long: true }; },
+      function(){ var g = ri(3, 8), per = ri(4, 9); return { cat: 'Textaufgabe', q: (g * per) + ' Kinder verteilen sich gleichm\u00e4\u00dfig auf ' + g + ' Trampoline. Wie viele Kinder springen auf jedem Trampolin?', ans: per, unit: 'Kinder', long: true }; },
+      function(){ var p = ri(2, 8); return { cat: 'Textaufgabe', q: 'Ein Paar Sprungsocken kostet ' + p + ' Euro. Du kaufst 2 Paar und bezahlst mit 20 Euro. Wie viel Geld bekommst du zur\u00fcck?', ans: 20 - 2 * p, unit: 'Euro', long: true }; },
+      function(){ var m = pick([10, 12, 15, 20, 24, 30, 40]); return { cat: 'Textaufgabe', q: 'Eine Sprungrunde dauert ' + m + ' Minuten. Wie viele Runden passen in 2 Stunden?', ans: 120 / m, unit: 'Runden', long: true }; },
+      function(){ var s = ri(13, 16), d = ri(2, 4); return { cat: 'Textaufgabe', q: 'Wir springen von ' + s + ' Uhr bis ' + (s + d) + ' Uhr. Wie viele Minuten sind das?', ans: d * 60, unit: 'min', long: true }; }
+    ])();
+  }
+};
+var GEN_KEYS = ['mul', 'mul10', 'div', 'add', 'sub', 'half', 'dbl', 'missing', 'units', 'word', 'word'];
 
-        function boostJump() {
-            const now = Date.now();
-            const timeDiff = now - lastTapTime;
-            lastTapTime = now;
+var taskCat = document.getElementById('taskCat');
+var taskQ = document.getElementById('taskQ');
+var taskUnit = document.getElementById('taskUnit');
+var taskBox = document.getElementById('taskBox');
+var answerInput = document.getElementById('answerInput');
+var checkBtn = document.getElementById('checkBtn');
+var feedback = document.getElementById('feedback');
+var current = null;
+var lastKey = '';
+var locked = false;
 
-            // ضربه‌های متوالی سریع قدرت پرش را افزایش می‌دهد
-            if (timeDiff < 400) {
-                jumpPower = Math.min(jumpPower + 1, 5);
-            } else {
-                jumpPower = 1;
-            }
+function newTask(){
+  var key;
+  do { key = pick(GEN_KEYS); } while (key === lastKey);
+  lastKey = key;
+  current = GEN[key]();
+  taskCat.textContent = current.cat;
+  taskQ.textContent = current.q;
+  taskQ.className = 'task-q' + (current.long || current.q.length > 22 ? ' long' : '');
+  taskUnit.textContent = current.unit || '';
+  answerInput.value = '';
+  taskBox.classList.remove('pop');
+  void taskBox.offsetWidth;
+  taskBox.classList.add('pop');
+}
 
-            playSpringSound(jumpPower);
+function setFeedback(text, kind){
+  feedback.textContent = text;
+  feedback.className = 'feedback' + (kind ? ' ' + kind : '');
+}
 
-            const jumper = document.getElementById('jumper');
-            const trampBed = document.getElementById('trampBed');
-            const heightNum = document.getElementById('heightNum');
+document.getElementById('answerForm').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  if (locked) return;
+  initAudio();
+  var raw = answerInput.value.replace(/[\s.]/g, '');
+  if (!/^\d+$/.test(raw)) {
+    setFeedback('Bitte gib eine ganze Zahl ein, zum Beispiel 168.', 'bad');
+    answerInput.focus();
+    return;
+  }
+  var v = parseInt(raw, 10);
+  if (v === current.ans) {
+    locked = true;
+    checkBtn.disabled = true;
+    setFeedback('Richtig! Die T\u00fcr geht auf ...', 'ok');
+    sRight();
+    setTimeout(openApp, 900);
+  } else {
+    locked = true;
+    checkBtn.disabled = true;
+    sWrong();
+    setFeedback('Leider falsch. Richtig w\u00e4re ' + current.ans + '. Hier kommt eine neue Aufgabe.', 'bad');
+    taskBox.classList.remove('shake');
+    void taskBox.offsetWidth;
+    taskBox.classList.add('shake');
+    setTimeout(function(){
+      locked = false;
+      checkBtn.disabled = false;
+      newTask();
+      answerInput.focus();
+    }, 2200);
+  }
+});
 
-            const heightPx = 40 + (jumpPower * 25);
-            const meters = jumpPower * 3;
+document.getElementById('newTaskBtn').addEventListener('click', function(){
+  if (locked) return;
+  setFeedback('', '');
+  newTask();
+  answerInput.focus();
+});
 
-            heightNum.innerText = meters;
+function openApp(){
+  document.getElementById('gateView').hidden = true;
+  document.getElementById('countView').hidden = false;
+  document.getElementById('stageView').hidden = false;
+  document.getElementById('infoView').hidden = false;
+  startCountdown();
+  startGame();
+}
 
-            // انیمیشن ترامپولین
-            trampBed.style.transform = `scaleY(${1 + jumpPower*0.3}) translateY(6px)`;
+newTask();
 
-            setTimeout(() => {
-                trampBed.style.transform = 'scaleY(1) translateY(0)';
-                
-                if (jumpPower >= 4) {
-                    jumper.innerText = '🚀';
-                } else {
-                    jumper.innerText = '🤸';
-                }
-                
-                jumper.style.transform = `translateY(-${heightPx}px) scale(${1 + jumpPower*0.1})`;
-            }, 80);
+/* ================= COUNTDOWN ================= */
+var START = new Date(2026, 9, 3, 15, 0, 0).getTime();
+var END = new Date(2026, 9, 3, 19, 0, 0).getTime();
+function pad2(n){ return (n < 10 ? '0' : '') + n; }
 
-            // بازگشت به حالت عادی یا غمگین پس از عدم ضربه
-            clearTimeout(resetTimer);
-            resetTimer = setTimeout(() => {
-                jumper.style.transform = 'translateY(0) scale(1)';
-                jumper.innerText = '😔';
-                heightNum.innerText = '0';
-                jumpPower = 0;
-            }, 1200);
-        }
+function tickCountdown(){
+  var now = Date.now();
+  var d = Math.max(0, START - now);
+  var days = Math.floor(d / 86400000);
+  var hours = Math.floor((d % 86400000) / 3600000);
+  var mins = Math.floor((d % 3600000) / 60000);
+  var secs = Math.floor((d % 60000) / 1000);
+  document.getElementById('tDays').textContent = pad2(days);
+  document.getElementById('tHours').textContent = pad2(hours);
+  document.getElementById('tMins').textContent = pad2(mins);
+  document.getElementById('tSecs').textContent = pad2(secs);
+  var st = document.getElementById('countStatus');
+  if (now < START) st.textContent = 'Samstag, 3. Oktober 2026 um 15:00 Uhr';
+  else if (now < END) st.textContent = 'Jetzt wird gesprungen! Bis 19:00 Uhr.';
+  else st.textContent = 'Das war der Gruppensprung. Danke f\u00fcrs Mitspringen!';
+}
+function startCountdown(){ tickCountdown(); setInterval(tickCountdown, 1000); }
 
-        function startCountdown() {
-            const targetDate = new Date('October 3, 2026 15:00:00').getTime();
+document.getElementById('copyBtn').addEventListener('click', function(){
+  var btn = this;
+  var text = document.getElementById('addr').textContent;
+  function done(ok){
+    btn.textContent = ok ? 'Kopiert' : 'Adresse markiert';
+    setTimeout(function(){ btn.textContent = 'Adresse kopieren'; }, 1800);
+  }
+  function selectIt(){
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById('addr'));
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+    } catch (e) {}
+    done(false);
+  }
+  try {
+    navigator.clipboard.writeText(text).then(function(){ done(true); }, selectIt);
+  } catch (e) { selectIt(); }
+});
 
-            setInterval(() => {
-                const now = new Date().getTime();
-                const difference = targetDate - now;
+/* ================= TRAMPOLINE GAME ================= */
+var W = 440, H = 360;
+var GROUND = 340, RIM = 262, PAD_TOP = 254;
+var BL = 70, BR = 370, EL = BL + 16, ER = BR - 16, CX = 220;
+var PX_M = 58, G = 1800, K = 900, PMAX = 14, FS = 1.35;
+var FRIEND_AFTER = 8;
 
-                if (difference > 0) {
-                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+var cv = document.getElementById('cv');
+var ctx = cv.getContext('2d');
+var stageEl = document.getElementById('stage');
+var scale = 1, dpr = 1;
 
-                    document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-                    document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-                    document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-                    document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+function clamp(v, a, b){ return v < a ? a : (v > b ? b : v); }
+function smooth(t){ return t * t * (3 - 2 * t); }
 
-                    playTickSound();
-                }
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+function resize(){
+  var r = cv.getBoundingClientRect();
+  if (!r.width) return;
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width = Math.round(r.width * dpr);
+  cv.height = Math.round(r.height * dpr);
+  scale = r.width / W;
+}
+
+/* ---- kid voices (synthesized: laugh, "wiii", "juhu") ---- */
+var master = null, noiseBuf = null, voiceGlobalCd = 0;
+function out(){
+  if (!master) {
+    master = ac.createGain();
+    master.gain.value = 0.9;
+    var comp = ac.createDynamicsCompressor();
+    master.connect(comp);
+    comp.connect(ac.destination);
+  }
+  return master;
+}
+function noise(){
+  if (!noiseBuf) {
+    var len = Math.floor(ac.sampleRate * 0.6);
+    noiseBuf = ac.createBuffer(1, len, ac.sampleRate);
+    var d = noiseBuf.getChannelData(0);
+    for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  }
+  return noiseBuf;
+}
+/* one voiced syllable: pts = [[timeFraction, frequency], ...], F1/F2 = vowel formants */
+function syll(t, pts, dur, vol, F1, F2, breath){
+  var o = ac.createOscillator();
+  o.type = 'sawtooth';
+  o.frequency.setValueAtTime(pts[0][1], t);
+  for (var i = 1; i < pts.length; i++) o.frequency.exponentialRampToValueAtTime(pts[i][1], t + dur * pts[i][0]);
+  var lfo = ac.createOscillator();
+  lfo.frequency.value = 6 + Math.random() * 2;
+  var lg = ac.createGain();
+  lg.gain.value = pts[0][1] * 0.025;
+  lfo.connect(lg); lg.connect(o.frequency);
+  var f1 = ac.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = F1; f1.Q.value = 5;
+  var f2 = ac.createBiquadFilter(); f2.type = 'bandpass'; f2.frequency.value = F2; f2.Q.value = 7;
+  var lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1100;
+  var g2 = ac.createGain(); g2.gain.value = 0.55;
+  var g3 = ac.createGain(); g3.gain.value = 0.22;
+  var g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.02);
+  g.gain.setValueAtTime(vol, t + dur * 0.6);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(f1); o.connect(f2); o.connect(lp);
+  f1.connect(g); f2.connect(g2); g2.connect(g); lp.connect(g3); g3.connect(g);
+  g.connect(out());
+  o.start(t); o.stop(t + dur + 0.03);
+  lfo.start(t); lfo.stop(t + dur + 0.03);
+  if (breath) {
+    var n = ac.createBufferSource();
+    n.buffer = noise();
+    var nf = ac.createBiquadFilter(); nf.type = 'bandpass'; nf.frequency.value = 1700; nf.Q.value = 0.8;
+    var ng = ac.createGain();
+    ng.gain.setValueAtTime(0.0001, t - 0.045);
+    ng.gain.exponentialRampToValueAtTime(vol * breath, t - 0.02);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+    n.connect(nf); nf.connect(ng); ng.connect(out());
+    n.start(t - 0.045, Math.random() * 0.4);
+    n.stop(t + 0.05);
+  }
+}
+function vLaugh(f){
+  var t = ac.currentTime + 0.06, n = ri(4, 6);
+  for (var i = 0; i < n; i++) {
+    var fi = f * (1.15 - i * 0.05) * (0.96 + Math.random() * 0.08);
+    syll(t, [[0, fi], [1, fi * 0.8]], 0.1, 0.75, 880 + Math.random() * 140, 1450 + Math.random() * 180, 0.55);
+    t += 0.15 + Math.random() * 0.03;
+  }
+}
+function vWhee(f){
+  var t = ac.currentTime + 0.06;
+  syll(t, [[0, f * 0.95], [0.35, f * 1.75], [1, f * 1.1]], 0.78, 0.7, 450, 2500, 0.3);
+}
+function vJuhu(f){
+  var t = ac.currentTime + 0.06;
+  syll(t, [[0, f * 0.9], [1, f]], 0.14, 0.75, 400, 900, 0.15);
+  syll(t + 0.19, [[0, f * 1.05], [0.5, f * 1.5], [1, f * 1.3]], 0.36, 0.75, 420, 950, 0.6);
+}
+var VOICE_LEN = { laugh: 0.85, whee: 0.8, juhu: 0.6 };
+function voice(k, kind){
+  if (k.voiceCd > 0 || voiceGlobalCd > 0) return;
+  k.voiceCd = 2.2;
+  voiceGlobalCd = 0.7;
+  k.laughT = VOICE_LEN[kind];
+  if (!soundOn || !ac) return;
+  try {
+    if (kind === 'laugh') vLaugh(k.voice);
+    else if (kind === 'whee') vWhee(k.voice);
+    else vJuhu(k.voice);
+  } catch (e) {}
+}
+function boingK(k){
+  if (!soundOn || !ac) return;
+  var b = 150 + k.p * 22 + (k.auto ? -25 : 0), v = k.auto ? 0.13 : 0.26;
+  tone('sine', b, b * 2.7, 0.15, v);
+  tone('sine', b * 2.7, b * 1.3, 0.2, v * 0.4, 0.13);
+}
+
+/* ---- pose model (side view, facing +x, y down, angles from straight down, + = forward) ---- */
+function P(l, a1, a2, k1, k2, s1, s2, e1, e2, t){
+  return { lean: l, a: [a1, a2], k: [k1, k2], s: [s1, s2], e: [e1, e2], tilt: t || 0 };
+}
+function copyPose(p){ return P(p.lean, p.a[0], p.a[1], p.k[0], p.k[1], p.s[0], p.s[1], p.e[0], p.e[1], p.tilt); }
+function blendPose(c, t, f){
+  c.lean += (t.lean - c.lean) * f;
+  c.tilt += (t.tilt - c.tilt) * f;
+  for (var i = 0; i < 2; i++) {
+    c.a[i] += (t.a[i] - c.a[i]) * f;
+    c.k[i] += (t.k[i] - c.k[i]) * f;
+    c.s[i] += (t.s[i] - c.s[i]) * f;
+    c.e[i] += (t.e[i] - c.e[i]) * f;
+  }
+}
+var STAND = P(0.03, 0.06, -0.04, 0.06, 0.08, 0.15, -0.12, 0.35, 0.3, 0);
+var TORSO = 24, L1 = 17, L2 = 17, UA = 13, FA = 12, HR = 9.5;
+
+function joints(p){
+  var j = { kn: [], ft: [], fa: [], el: [], hn: [] };
+  j.sh = { x: Math.sin(p.lean) * TORSO, y: -Math.cos(p.lean) * TORSO };
+  j.ha = p.lean + p.tilt;
+  j.hd = { x: j.sh.x + Math.sin(j.ha) * (3.5 + HR), y: j.sh.y - Math.cos(j.ha) * (3.5 + HR) };
+  for (var i = 0; i < 2; i++) {
+    var a = p.a[i], sa = a - p.k[i];
+    var kn = { x: Math.sin(a) * L1, y: Math.cos(a) * L1 };
+    j.kn.push(kn);
+    j.ft.push({ x: kn.x + Math.sin(sa) * L2, y: kn.y + Math.cos(sa) * L2 });
+    j.fa.push(sa);
+    var s = p.s[i], ea = s + p.e[i];
+    var el = { x: j.sh.x + Math.sin(s) * UA, y: j.sh.y + Math.cos(s) * UA };
+    j.el.push(el);
+    j.hn.push({ x: el.x + Math.sin(ea) * FA, y: el.y + Math.cos(ea) * FA });
+  }
+  return j;
+}
+function footExt(j){ return { y: Math.max(j.ft[0].y, j.ft[1].y) + 3, x: (j.ft[0].x + j.ft[1].x) / 2 }; }
+
+/* ---- kids ---- */
+var LOOKS = {
+  girl: { skin: '#f2c29b', skinB: '#d9a07a', hair: '#2b1a12', shirt: '#ff2e88', shirtB: '#c21f68',
+          shorts: '#2c3a8c', shortsB: '#1e2766', sock: '#ffd23f', sockB: '#d4aa1c', style: 'pony' },
+  boy:  { skin: '#c98e62', skinB: '#a8714a', hair: '#1a1210', shirt: '#22b8ff', shirtB: '#1582b8',
+          shorts: '#4a2f7a', shortsB: '#33205a', sock: '#3dffa8', sockB: '#27c47f', cap: '#ffd23f', style: 'cap' }
+};
+function sitX(k){ return k.side > 0 ? 388 : 52; }
+function standX(k){ return sitX(k) - 4 * k.side; }
+
+function makeKid(o){
+  return {
+    look: LOOKS[o.look], side: o.side, home: o.home, voice: o.voice, auto: !!o.auto,
+    state: o.state || 'stand', x: o.x, y: o.y, vx: 0, vy: 0, dir: o.dir || 1,
+    idle: 0, walkPh: 0, sitT: 0, u: 0, wait: 0,
+    airT: 0, flightT: 1, flips: 0, tuck: false, rot: 0,
+    p: 0, combo: 0, boosted: false, lastH: 0,
+    dip: { d: o.state === 'enter' ? 0 : 5, v: 0, dx: clamp(o.x, EL + 20, ER - 20) },
+    cur: copyPose(STAND),
+    pony: { a: 0.5, v: 0 }, blink: { t: 2 + Math.random() * 3, on: 0 },
+    laughT: 0, voiceCd: 0
+  };
+}
+
+var kids, k1, k2, jumpCount = 0;
+var time = 0, cam = 0, shake = 0;
+var parts = [], texts = [];
+var record = 0;
+var running = false;
+try { record = parseFloat(localStorage.getItem('hifly-record')) || 0; } catch (e) { record = 0; }
+
+function resetAll(){
+  k1 = makeKid({ look: 'girl', side: 1, home: CX, x: CX, y: RIM + 5, voice: 560 });
+  k2 = null;
+  kids = [k1];
+  jumpCount = 0;
+}
+resetAll();
+
+function spawnFriend(){
+  k2 = makeKid({ look: 'boy', side: -1, home: 166, x: -30, y: GROUND, state: 'enter', dir: 1, voice: 440, auto: true });
+  kids.unshift(k2);
+  k1.home = 274;
+  showToast('Ein Freund kommt dazu und springt mit!');
+}
+
+function k1Active(){ return k1.state === 'air' || k1.state === 'contact'; }
+function k1Resting(){ return k1.state === 'walk' || k1.state === 'sitdown' || k1.state === 'sit'; }
+
+/* ---- bed: every kid owns one dip, the drawn bed is their sum ---- */
+function dipAt(dip, x){
+  if (x <= EL || x >= ER) return 0;
+  var dx = clamp(dip.dx, EL + 20, ER - 20);
+  var t = x < dx ? (x - EL) / (dx - EL) : (ER - x) / (ER - dx);
+  return dip.d * (1 - (1 - t) * (1 - t));
+}
+function depthAt(x){
+  var s = 0;
+  for (var i = 0; i < kids.length; i++) s += dipAt(kids[i].dip, x);
+  return s;
+}
+function otherDepth(k, x){
+  var s = 0;
+  for (var i = 0; i < kids.length; i++) if (kids[i] !== k) s += dipAt(kids[i].dip, x);
+  return s;
+}
+function totalDip(){
+  var s = 0;
+  for (var i = 0; i < kids.length; i++) s += Math.abs(kids[i].dip.d);
+  return s;
+}
+function groundAt(x){
+  if (x < BL - 36 || x > BR + 36) return GROUND;
+  if (x <= BL + 2 || x >= BR - 2) return PAD_TOP;
+  if (x <= EL || x >= ER) return RIM;
+  return RIM + depthAt(x);
+}
+
+/* ---- effects ---- */
+var COLS = ['#22e4ff', '#ff2e88', '#ffd23f', '#3dffa8'];
+function burst(x, y, n, up){
+  for (var i = 0; i < n; i++) {
+    parts.push({ x: x + (Math.random() - 0.5) * 30, y: y,
+      vx: (Math.random() - 0.5) * 360, vy: -(up ? 200 + Math.random() * 380 : 60 + Math.random() * 160),
+      life: 0.7 + Math.random() * 0.5, c: pick(COLS), s: 2 + Math.random() * 3, r: Math.random() * 6 });
+  }
+}
+function floatText(t, x, y, c, big){ texts.push({ t: t, x: x, y: y, c: c, life: 1.3, big: !!big }); }
+
+/* ---- actions ---- */
+function takeoff(k){
+  var Ht = k.p > 0 ? 50 + k.p * 55 : k.lastH * 0.38;
+  k.dip.d = 0;
+  if (k.p === 0 && Ht < 12) {
+    k.state = 'stand'; k.idle = 0; k.vy = 0; k.lastH = 0; k.combo = 0; k.wait = 0;
+    k.dip.v = -90;
+    return;
+  }
+  k.lastH = Ht;
+  k.vy = -Math.sqrt(2 * G * Ht);
+  k.flightT = 2 * Math.sqrt(2 * Ht / G);
+  k.vx = (k.home - k.x) / k.flightT * 0.5;
+  k.dip.v = k.vy * 0.28;
+  k.state = 'air';
+  k.airT = 0;
+  k.flips = k.p >= 12 ? 3 : (k.p >= 9 ? 2 : (k.p >= 6 ? 1 : 0));
+  k.tuck = k.p >= 4;
+  k.boosted = false;
+  if (k.p > 0) boingK(k);
+  if (k.p >= 2) burst(k.x, RIM, 4 + k.p * 2, true);
+  if (k.p >= 5 && Math.random() < 0.45) voice(k, Math.random() < 0.5 ? 'whee' : 'juhu');
+  if (k === k1 && k.p > 0) {
+    jumpCount++;
+    var m = Ht / PX_M;
+    if (m > record + 0.05) {
+      var first = record === 0;
+      record = m;
+      try { localStorage.setItem('hifly-record', String(record)); } catch (e) {}
+      if (!first) { showToast('Neuer Rekord: ' + fmt(m) + ' m'); sRecord(); }
+    }
+    if (!k2 && jumpCount >= FRIEND_AFTER) spawnFriend();
+  }
+}
+
+function land(k){
+  var hadFlips = k.flips;
+  k.state = 'contact';
+  k.vx = 0;
+  k.rot = 0;
+  k.dip.dx = k.x;
+  k.dip.d = Math.max(0, k.y - RIM - otherDepth(k, k.x));
+  k.dip.v = k.vy + (k.boosted ? 180 : 0);
+  if (!k.boosted) { k.p = Math.max(0, k.p - 2); k.combo = 0; }
+  if (k === k1) shake = Math.min(7, k.vy / 240);
+  if (k.vy > 250) sThud(k.vy * (k.auto ? 0.5 : 1));
+  if (k.vy > 900) burst(k.x, RIM + k.dip.d, 8, false);
+  if (hadFlips >= 1 && Math.random() < 0.6) voice(k, 'laugh');
+  k.flips = 0;
+}
+
+function hopToHome(k, apex){
+  var Ht = apex || 90;
+  k.state = 'air';
+  k.vy = -Math.sqrt(2 * G * Ht);
+  var drop = RIM - k.y;
+  k.flightT = (-k.vy + Math.sqrt(k.vy * k.vy + 2 * G * drop)) / G;
+  k.vx = (k.home - k.x) / k.flightT;
+  k.dir = k.vx < 0 ? -1 : 1;
+  k.airT = 0; k.flips = 0; k.tuck = false; k.rot = 0;
+  k.p = Math.max(k.p, 1); k.combo = 1; k.boosted = true; k.lastH = Ht;
+  boingK(k);
+}
+
+function startJump(k){
+  k.state = 'contact';
+  k.p = Math.max(k.p, 1);
+  k.combo = 1;
+  k.boosted = true;
+  k.dip.dx = k.x;
+  k.dip.v = Math.max(k.dip.v, 0) + 300;
+  k.vy = 0;
+}
+
+function startWalk(k){ k.state = 'walk'; k.dir = k.side; k.walkPh = 0; }
+
+function boost(k, perfect){
+  k.boosted = true;
+  var inc = perfect ? 2 : 1;
+  if (k.auto) inc = clamp(k1.p - k.p, 1, 2);
+  k.p = Math.min(PMAX, k.p + inc);
+  k.combo++;
+  if (k.auto) return;
+  var hy = k.y - 105;
+  if (perfect) {
+    floatText('Perfekt!', k.x, hy, '#ffd23f', true);
+    sPerfect();
+    if (Math.random() < 0.35) voice(k, 'juhu');
+  } else {
+    floatText('H\u00f6her!', k.x, hy, '#22e4ff', false);
+    tone('triangle', 660, 0, 0.08, 0.08);
+  }
+  if (k.combo % 5 === 0) voice(k, 'laugh');
+}
+
+function tap(){
+  initAudio();
+  var k = k1, st = k.state;
+  if (st === 'stand' || (st === 'walk' && k.x > EL + 14 && k.x < ER - 14)) { startJump(k); return; }
+  if (st === 'walk') { k.y = groundAt(k.x); hopToHome(k); return; }
+  if (st === 'sit' || st === 'sitdown') { k.state = 'standup'; return; }
+  if (st === 'standup') return;
+  if (st === 'air') {
+    if (k.vy < 0) {
+      floatText('Zu fr\u00fch!', k.x, k.y - 105, '#9ea7cc', false);
+      sEarly();
+      return;
+    }
+    if (k.boosted) return;
+    var ttc = (RIM + k.dip.d - k.y) / Math.max(k.vy, 1);
+    boost(k, ttc < 0.14);
+    return;
+  }
+  if (st === 'contact') {
+    if (k.boosted) return;
+    var perfect = k.dip.v > 0;
+    boost(k, perfect);
+    if (perfect) k.dip.v += 180;
+  }
+}
+
+stageEl.addEventListener('pointerdown', function(ev){
+  if (ev.button !== undefined && ev.button > 0) return;
+  tap();
+});
+stageEl.addEventListener('keydown', function(ev){
+  if (ev.key === ' ' || ev.key === 'Enter' || ev.key === 'ArrowUp') {
+    ev.preventDefault();
+    if (!ev.repeat) tap();
+  }
+});
+
+/* ---- physics ---- */
+function freeDip(dip, h){
+  dip.v += (-K * dip.d - 4.5 * dip.v) * h;
+  dip.d += dip.v * h;
+}
+
+function step(k, h){
+  var st = k.state, dip = k.dip;
+  if (st === 'contact') {
+    dip.v += (G - K * dip.d) * h;
+    dip.d += dip.v * h;
+    dip.dx = k.x;
+    k.y = RIM + dip.d + otherDepth(k, k.x);
+    if (dip.d <= 0 && dip.v < 0) takeoff(k);
+  } else if (st === 'air') {
+    k.vy += G * h;
+    k.y += k.vy * h;
+    k.x += k.vx * h;
+    k.airT += h;
+    freeDip(dip, h);
+    if (k.x > EL + 14 && k.x < ER - 14) {
+      dip.dx += (k.x - dip.dx) * Math.min(1, h * 20);
+      if (k.vy > 0 && k.y >= RIM + dip.d + otherDepth(k, k.x)) land(k);
+    } else if (k.vy > 0 && k.y >= GROUND) {
+      k.state = 'stand'; k.x = k.home; k.y = RIM + 5; k.vx = 0; k.vy = 0; k.p = 0; k.combo = 0; k.rot = 0;
+    }
+  } else if (st === 'stand' || st === 'walk') {
+    var onBed = k.x > EL && k.x < ER;
+    var wt = onBed ? 5 : 0;
+    if (st === 'walk' && onBed) wt = 5 + Math.sin(k.walkPh * 2) * 1.5;
+    if (onBed) dip.dx = clamp(k.x, EL + 24, ER - 24);
+    dip.v += (-K * (dip.d - wt) - 16 * dip.v) * h;
+    dip.d += dip.v * h;
+    k.y = groundAt(k.x);
+  } else {
+    freeDip(dip, h);
+    if (st === 'enter') k.y = GROUND;
+  }
+}
+
+function logic(k, dt){
+  k.voiceCd -= dt;
+  if (k.laughT > 0) k.laughT -= dt;
+  var st = k.state;
+  if (st === 'stand') {
+    if (!k.auto) {
+      k.idle += dt;
+      if (k.idle > 4.5) startWalk(k);
+    } else if (k1Active() && k1.p > 0) {
+      k.wait += dt;
+      if (k.wait > 0.25) { k.wait = 0; startJump(k); }
+    } else if (k1Resting()) {
+      k.wait += dt;
+      if (k.wait > 0.8) { k.wait = 0; startWalk(k); }
+    } else {
+      k.wait = 0;
+    }
+  } else if (st === 'walk') {
+    k.walkPh += dt * 9;
+    k.x += 62 * k.dir * dt;
+    if (k.auto && k1Active()) {
+      if (k.x > EL + 14 && k.x < ER - 14) startJump(k);
+      else { k.y = groundAt(k.x); hopToHome(k); }
+      return;
+    }
+    var tx = standX(k);
+    if ((k.x - tx) * k.dir >= 0) { k.x = tx; k.y = PAD_TOP; k.state = 'sitdown'; k.u = 0; }
+  } else if (st === 'enter') {
+    k.walkPh += dt * 10;
+    k.x += 85 * dt;
+    if (k.x >= 14) { hopToHome(k, 150); voice(k, 'juhu'); }
+  } else if (st === 'sitdown') {
+    k.u = Math.min(1, k.u + dt / 0.8);
+    if (k.u >= 1) { k.state = 'sit'; k.sitT = 0; k.wait = 0; }
+  } else if (st === 'sit') {
+    k.sitT += dt;
+    if (k.auto && (k1Active() || k1.state === 'standup')) {
+      k.wait += dt;
+      if (k.wait > 0.3) { k.wait = 0; k.state = 'standup'; }
+    }
+  } else if (st === 'standup') {
+    k.u = Math.max(0, k.u - dt / 0.35);
+    if (k.u <= 0) { k.x = standX(k); k.y = PAD_TOP; hopToHome(k); }
+  } else if (st === 'air') {
+    if (k.flips) {
+      var pr = clamp((k.airT / k.flightT - 0.1) / 0.78, 0, 1);
+      k.rot = -k.dir * Math.PI * 2 * k.flips * smooth(pr);
+    } else {
+      k.rot = 0;
+    }
+    if (k.auto && k.vy > 0 && !k.boosted) {
+      var tgt = k1Active() ? k1.p : 0;
+      if (tgt > 0 && k.p <= tgt) {
+        var ttc = (RIM + k.dip.d - k.y) / Math.max(k.vy, 1);
+        if (ttc < 0.12) boost(k, false);
+      }
+    }
+  }
+}
+
+function targetPose(k){
+  var st = k.state, t = time + (k.auto ? 1.7 : 0);
+  if (st === 'stand' || st === 'standup') {
+    var b = Math.sin(t * 2.2);
+    return P(0.03 + b * 0.015, 0.06, -0.04, 0.06, 0.08, 0.15 + b * 0.04, -0.12 - b * 0.04, 0.35, 0.3, 0);
+  }
+  if (st === 'contact') {
+    var c = clamp(k.dip.d / 38, 0, 1);
+    return P(0.12 + 0.3 * c, 0.25 + 0.55 * c, 0.2 + 0.55 * c, 0.35 + 1.0 * c, 0.35 + 1.0 * c,
+             -0.3 - 0.8 * c, -0.4 - 0.8 * c, 0.25, 0.2, 0.05);
+  }
+  if (st === 'air') {
+    var ph = k.airT / k.flightT;
+    var w0 = k.flips >= 2 ? 0.14 : 0.28;
+    if (k.tuck && ph > w0 && ph < 1 - w0) return P(0.45, 1.75, 1.6, 2.35, 2.3, 0.9, 0.75, 1.1, 1.2, 0.1);
+    if (k.vy < 0) return P(0.02, 0.02, -0.1, 0.05, 0.12, 2.95, 3.15, 0.1, 0.05, -0.1);
+    return P(0.06, 0.28, 0.1, 0.4, 0.25, 2.2, 2.45, 0.35, 0.3, 0.05);
+  }
+  if (st === 'walk' || st === 'enter') {
+    var w = k.walkPh, sw = Math.sin(w);
+    return P(0.06, 0.45 * sw, -0.45 * sw,
+             0.15 + 0.55 * Math.max(0, Math.sin(w + 1.6)), 0.15 + 0.55 * Math.max(0, Math.sin(w + 1.6 + Math.PI)),
+             -0.45 * sw, 0.45 * sw, 0.35, 0.35, 0);
+  }
+  /* sit / sitdown: legs dangle over the frame edge */
+  return P(-0.08 + 0.03 * Math.sin(t * 1.3), 1.45, 1.55,
+           1.45 + 0.38 * Math.sin(t * 3.1), 1.55 + 0.38 * Math.sin(t * 3.1 + 2.4),
+           -0.55, -0.5, -0.1, -0.1, 0.12 * Math.sin(t * 0.9));
+}
+
+function poseRate(k){
+  switch (k.state) {
+    case 'contact': return 30;
+    case 'air': return 12;
+    case 'walk': case 'enter': return 20;
+    case 'sitdown': return 5;
+    default: return 10;
+  }
+}
+
+function hipPos(k, j){
+  var st = k.state;
+  if (st === 'air') return { x: k.x, y: k.y - 37 * FS };
+  var ext = footExt(j);
+  if (st === 'sit' || st === 'sitdown' || st === 'standup') {
+    var e = smooth(k.u);
+    var sp = { x: standX(k) - ext.x * FS * k.dir, y: PAD_TOP - ext.y * FS };
+    var st2 = { x: sitX(k), y: PAD_TOP - 5 };
+    return { x: sp.x + (st2.x - sp.x) * e, y: sp.y + (st2.y - sp.y) * e };
+  }
+  return { x: k.x - ext.x * FS * k.dir, y: k.y - ext.y * FS };
+}
+
+/* ---- drawing ---- */
+function line(x1, y1, x2, y2, w, col){
+  ctx.strokeStyle = col; ctx.lineWidth = w;
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+}
+
+function drawLeg(L, j, i, back){
+  var kn = j.kn[i], ft = j.ft[i], sa = j.fa[i];
+  line(0, 0, kn.x, kn.y, 8, back ? L.shortsB : L.shorts);
+  line(kn.x, kn.y, ft.x, ft.y, 6, back ? L.skinB : L.skin);
+  var dx = Math.sin(sa), dy = Math.cos(sa);
+  line(ft.x - dx * 5, ft.y - dy * 5, ft.x, ft.y, 6.4, back ? L.sockB : L.sock);
+  var fx = Math.cos(sa), fy = -Math.sin(sa);
+  line(ft.x - fx * 2, ft.y - fy * 2, ft.x + fx * 6, ft.y + fy * 6, 6, back ? L.sockB : L.sock);
+}
+
+function drawArm(L, j, i, back){
+  var sh = j.sh, el = j.el[i], hn = j.hn[i];
+  line(sh.x, sh.y, el.x, el.y, 5, back ? L.skinB : L.skin);
+  var sx = sh.x + (el.x - sh.x) * 0.45, sy = sh.y + (el.y - sh.y) * 0.45;
+  line(sh.x, sh.y, sx, sy, 7.5, back ? L.shirtB : L.shirt);
+  line(el.x, el.y, hn.x, hn.y, 4.6, back ? L.skinB : L.skin);
+  ctx.fillStyle = back ? L.skinB : L.skin;
+  ctx.beginPath(); ctx.arc(hn.x, hn.y, 2.9, 0, Math.PI * 2); ctx.fill();
+}
+
+function drawHead(k, j){
+  var L = k.look, hd = j.hd;
+  ctx.save();
+  ctx.translate(hd.x, hd.y);
+  ctx.rotate(j.ha);
+  if (L.style === 'pony') {
+    var pa = k.pony.a, bx = -7.5, by = -5;
+    var tx = bx - Math.sin(pa) * 17, ty = by + Math.cos(pa) * 17;
+    var mx = bx - Math.sin(pa - 0.35) * 9, my = by + Math.cos(pa - 0.35) * 9;
+    ctx.strokeStyle = L.hair; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.moveTo(bx, by); ctx.quadraticCurveTo(mx, my, tx, ty); ctx.stroke();
+    ctx.fillStyle = L.shirt;
+    ctx.beginPath(); ctx.arc(bx, by, 2.6, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.fillStyle = L.skin;
+  ctx.beginPath(); ctx.arc(0, 0, HR, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = L.hair;
+  if (L.style === 'pony') {
+    ctx.beginPath();
+    ctx.arc(0, 0, HR + 0.9, Math.PI * 0.72, Math.PI * 1.97);
+    ctx.quadraticCurveTo(1, -2, -5.5, 5.5);
+    ctx.closePath();
+    ctx.fill();
+  } else {
+    /* short hair + cap */
+    ctx.beginPath();
+    ctx.arc(0, 0, HR + 0.7, Math.PI * 0.7, Math.PI * 1.25);
+    ctx.lineTo(-2, -2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = L.cap;
+    ctx.beginPath();
+    ctx.arc(0, -1.5, HR + 1, Math.PI * 1.02, Math.PI * 1.98);
+    ctx.closePath();
+    ctx.fill();
+    line(4, -2.2, 15, -1.2, 3, L.cap);
+  }
+  ctx.fillStyle = L.skinB;
+  ctx.beginPath(); ctx.arc(-1.5, 1.5, 2.2, 0, Math.PI * 2); ctx.fill();
+  if (k.blink.on > 0) {
+    line(3.2, -0.6, 6.4, -0.6, 1.4, '#1a1020');
+  } else {
+    ctx.fillStyle = '#1a1020';
+    ctx.beginPath(); ctx.arc(4.9, -0.8, 1.35, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.fillStyle = 'rgba(255,90,140,.35)';
+  ctx.beginPath(); ctx.arc(4.2, 3.4, 1.9, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#8a2a3a'; ctx.lineWidth = 1.3;
+  var bored = k.state === 'sit' && k.sitT > 3;
+  if (k.laughT > 0 || (k.state === 'air' && k.p >= 6)) {
+    var open = k.laughT > 0 ? 1.3 + Math.abs(Math.sin(time * 38)) * 1.2 : 1.9;
+    ctx.fillStyle = '#8a2a3a';
+    ctx.beginPath(); ctx.ellipse(6.6, 4.4, 1.7, open, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (bored) {
+    ctx.beginPath(); ctx.moveTo(5.2, 5); ctx.lineTo(8.2, 4.8); ctx.stroke();
+  } else {
+    ctx.beginPath(); ctx.arc(6.2, 3.2, 2.4, 0.15 * Math.PI, 0.75 * Math.PI); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawKid(k){
+  var L = k.look;
+  var j = joints(k.cur);
+  var hp = hipPos(k, j);
+  ctx.save();
+  ctx.translate(hp.x, hp.y);
+  if (k.rot) { ctx.translate(0, -12 * FS); ctx.rotate(k.rot); ctx.translate(0, 12 * FS); }
+  ctx.scale(k.dir * FS, FS);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  drawArm(L, j, 0, true);
+  drawLeg(L, j, 0, true);
+  line(0, -2, j.sh.x, j.sh.y + 2, 13, L.shirt);
+  ctx.fillStyle = 'rgba(255,255,255,.85)';
+  ctx.save(); ctx.translate(j.sh.x * 0.55, j.sh.y * 0.55); ctx.rotate(k.cur.lean);
+  ctx.beginPath(); ctx.moveTo(-2, -3); ctx.lineTo(3, -3); ctx.lineTo(-0.5, 3.5); ctx.closePath(); ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = L.shorts;
+  ctx.beginPath(); ctx.arc(0, 0, 6.6, 0, Math.PI * 2); ctx.fill();
+  drawLeg(L, j, 1, false);
+  line(j.sh.x, j.sh.y, j.sh.x + Math.sin(j.ha) * 4, j.sh.y - Math.cos(j.ha) * 4, 4.5, L.skin);
+  drawHead(k, j);
+  drawArm(L, j, 1, false);
+  ctx.restore();
+}
+
+function drawSprings(x1, x2, y, stretch){
+  var n = 6, len = x2 - x1, amp = 3.4 - clamp(stretch, 0, 1) * 2.2;
+  ctx.strokeStyle = '#cfd6ff'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(x1, y);
+  for (var i = 1; i < n * 2; i++) ctx.lineTo(x1 + len * i / (n * 2), y + (i % 2 ? -amp : amp));
+  ctx.lineTo(x2, y);
+  ctx.stroke();
+}
+
+function roundRect(x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+function drawPad(x, y, w){
+  var g = ctx.createLinearGradient(0, y, 0, y + 8);
+  g.addColorStop(0, '#2a3aa8'); g.addColorStop(1, '#16205e');
+  ctx.fillStyle = g;
+  roundRect(x, y, w, 8, 4); ctx.fill();
+  ctx.strokeStyle = 'rgba(34,228,255,.75)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(x + 3, y + 0.8); ctx.lineTo(x + w - 3, y + 0.8); ctx.stroke();
+}
+
+function drawTrampoline(){
+  var td = totalDip();
+  var stretch = td / 45;
+  var inset = Math.max(0, td) * 0.1;
+  ctx.fillStyle = 'rgba(0,0,0,.45)';
+  ctx.beginPath(); ctx.ellipse(CX, GROUND + 3, 190, 9, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.lineCap = 'round';
+  var legC = '#3b4590';
+  line(BL - 20, RIM + 6, BL - 32, GROUND, 5, legC);
+  line(BL - 20, RIM + 6, BL - 4, GROUND, 5, legC);
+  line(BR + 20, RIM + 6, BR + 32, GROUND, 5, legC);
+  line(BR + 20, RIM + 6, BR + 4, GROUND, 5, legC);
+  line(BL - 22, RIM + 6, BR + 22, RIM + 6, 4, '#252c62');
+  drawSprings(BL, EL + inset, RIM + 1, stretch);
+  drawSprings(ER - inset, BR, RIM + 1, stretch);
+  var x0 = EL + inset, x1 = ER - inset, N = 56, i, x;
+  ctx.beginPath();
+  ctx.moveTo(x0, RIM);
+  for (i = 1; i <= N; i++) { x = x0 + (x1 - x0) * i / N; ctx.lineTo(x, RIM + depthAt(x)); }
+  ctx.lineTo(x1, RIM + 3);
+  for (i = N; i >= 0; i--) { x = x0 + (x1 - x0) * i / N; ctx.lineTo(x, RIM + 3 + depthAt(x) * 0.96); }
+  ctx.closePath();
+  ctx.fillStyle = '#10132e';
+  ctx.fill();
+  var gr = ctx.createLinearGradient(x0, 0, x1, 0);
+  gr.addColorStop(0, '#ff2e88'); gr.addColorStop(0.5, '#b04dff'); gr.addColorStop(1, '#22e4ff');
+  ctx.save();
+  ctx.shadowColor = 'rgba(255,46,136,.8)';
+  ctx.shadowBlur = 10 + Math.min(14, td * 0.5);
+  ctx.strokeStyle = gr; ctx.lineWidth = 3.5;
+  ctx.beginPath(); ctx.moveTo(x0, RIM);
+  for (i = 1; i <= N; i++) { x = x0 + (x1 - x0) * i / N; ctx.lineTo(x, RIM + depthAt(x)); }
+  ctx.stroke();
+  ctx.restore();
+  drawPad(BL - 36, PAD_TOP, 38);
+  drawPad(BR - 2, PAD_TOP, 38);
+}
+
+function drawBackground(){
+  var g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#0a0c28'); g.addColorStop(1, '#170d33');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+  var off = -cam * 0.25;
+  for (var i = 0; i < 44; i++) {
+    var sx = (i * 97.3) % W;
+    var sy = ((i * 53.7 + off) % (H + 20) + H + 20) % (H + 20) - 10;
+    ctx.fillStyle = 'rgba(200,210,255,' + (0.15 + (i % 5) * 0.08) + ')';
+    ctx.fillRect(sx, sy, 1.6, 1.6);
+  }
+}
+
+function drawWorld(){
+  ctx.strokeStyle = 'rgba(130,150,255,.07)'; ctx.lineWidth = 1;
+  var top = cam - 10, bot = cam + H + 10;
+  var gy0 = Math.floor((top - RIM) / PX_M) * PX_M + RIM;
+  for (var gy = gy0; gy < bot; gy += PX_M) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
+  for (var gx = 0; gx <= W; gx += 55) { ctx.beginPath(); ctx.moveTo(gx, top); ctx.lineTo(gx, Math.min(bot, GROUND)); ctx.stroke(); }
+  ctx.font = '600 10px Fredoka, Nunito, sans-serif';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  for (var m = 1; m <= 18; m++) {
+    var yy = RIM - m * PX_M;
+    if (yy < top - 20 || yy > bot) continue;
+    ctx.strokeStyle = 'rgba(158,167,204,.55)';
+    ctx.beginPath(); ctx.moveTo(6, yy); ctx.lineTo(16, yy); ctx.stroke();
+    ctx.fillStyle = 'rgba(158,167,204,.8)';
+    ctx.fillText(m + ' m', 19, yy);
+  }
+  if (record > 0) {
+    var ry = RIM - record * PX_M;
+    ctx.save();
+    ctx.setLineDash([6, 6]);
+    ctx.strokeStyle = 'rgba(255,210,63,.55)';
+    ctx.beginPath(); ctx.moveTo(56, ry); ctx.lineTo(W - 12, ry); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = 'rgba(255,210,63,.85)';
+    ctx.textAlign = 'right';
+    ctx.fillText('Rekord', W - 14, ry - 8);
+  }
+  ctx.fillStyle = '#0b0e24';
+  ctx.fillRect(-20, GROUND, W + 40, 600);
+  ctx.strokeStyle = 'rgba(34,228,255,.35)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0, GROUND + 0.5); ctx.lineTo(W, GROUND + 0.5); ctx.stroke();
+
+  drawTrampoline();
+
+  var i;
+  for (i = 0; i < kids.length; i++) {
+    var k = kids[i];
+    if (k.state === 'air' && k.x > EL && k.x < ER) {
+      var hgt = Math.max(0, RIM - k.y);
+      var f = 1 - clamp(hgt / 500, 0, 0.75);
+      ctx.fillStyle = 'rgba(0,0,0,' + (0.4 * f) + ')';
+      ctx.beginPath(); ctx.ellipse(k.x, RIM + depthAt(k.x) - 1, 16 * f, 3.5 * f, 0, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  for (i = 0; i < kids.length; i++) drawKid(kids[i]);
+
+  for (i = 0; i < parts.length; i++) {
+    var p = parts[i];
+    ctx.globalAlpha = clamp(p.life / 0.6, 0, 1);
+    ctx.fillStyle = p.c;
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+    ctx.beginPath();
+    ctx.moveTo(0, -p.s * 1.6); ctx.lineTo(p.s * 0.45, 0); ctx.lineTo(0, p.s * 1.6); ctx.lineTo(-p.s * 0.45, 0); ctx.closePath();
+    ctx.moveTo(-p.s * 1.6, 0); ctx.lineTo(0, p.s * 0.45); ctx.lineTo(p.s * 1.6, 0); ctx.lineTo(0, -p.s * 0.45); ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (i = 0; i < texts.length; i++) {
+    var ft = texts[i];
+    ctx.globalAlpha = clamp(ft.life / 0.5, 0, 1);
+    ctx.font = (ft.big ? '700 20px' : '600 15px') + ' Fredoka, Nunito, sans-serif';
+    ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(7,9,24,.85)';
+    ctx.strokeText(ft.t, ft.x, ft.y);
+    ctx.fillStyle = ft.c;
+    ctx.fillText(ft.t, ft.x, ft.y);
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ---- HUD ---- */
+var hudH = document.getElementById('hudH');
+var hudRec = document.getElementById('hudRec');
+var hudCombo = document.getElementById('hudCombo');
+var hintEl = document.getElementById('hint');
+var lastHud = { h: '', r: '', c: -1, hint: '' };
+var toastEl = document.getElementById('toast'), toastTimer = 0;
+function showToast(t){
+  toastEl.textContent = t;
+  toastEl.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.hidden = true; }, 2600);
+}
+function fmt(m){ return m.toFixed(1).replace('.', ','); }
+
+function updateHud(){
+  var h = k1.state === 'air' ? Math.max(0, RIM - k1.y) / PX_M : 0;
+  var hs = fmt(h), rs = fmt(record);
+  if (hs !== lastHud.h) { hudH.textContent = hs; lastHud.h = hs; }
+  if (rs !== lastHud.r) { hudRec.textContent = rs; lastHud.r = rs; }
+  if (k1.combo !== lastHud.c) {
+    lastHud.c = k1.combo;
+    if (k1.combo >= 2) { hudCombo.hidden = false; hudCombo.textContent = 'Combo x' + k1.combo; }
+    else hudCombo.hidden = true;
+  }
+  var hint;
+  switch (k1.state) {
+    case 'stand': hint = 'Tippe aufs Trampolin, um zu springen.'; break;
+    case 'walk': case 'sitdown': hint = 'Keiner tippt? Dann gibt es eine Pause am Rand.'; break;
+    case 'sit': case 'standup':
+      hint = k2 ? 'Die beiden sitzen am Rand und lassen die Beine baumeln. Tippe, dann springen sie wieder.'
+                : 'Sie sitzt am Rand und l\u00e4sst die Beine baumeln. Tippe, damit sie wieder springt.';
+      break;
+    default:
+      hint = k1.p >= 6 ? 'Weiter so! Je h\u00f6her der Sprung, desto mehr Saltos.'
+           : 'Tippe, w\u00e4hrend sie nach unten f\u00e4llt. Kurz vor der Landung gibt es Perfekt und extra H\u00f6he.';
+  }
+  if (!k2 && jumpCount >= FRIEND_AFTER - 3 && jumpCount < FRIEND_AFTER && k1Active()) hint = 'Noch ein paar Spr\u00fcnge, dann kommt jemand dazu ...';
+  if (hint !== lastHud.hint) { hintEl.textContent = hint; lastHud.hint = hint; }
+}
+
+/* ---- main loop ---- */
+var lastT = 0;
+function updateKidAnim(k, dt){
+  blendPose(k.cur, targetPose(k), 1 - Math.exp(-dt * poseRate(k)));
+  var vyW = k.state === 'air' ? k.vy : (k.state === 'contact' ? k.dip.v : 0);
+  var pt = 0.45 + clamp(vyW / 1400, -0.3, 1) * 2.1;
+  if (k.state === 'sit') pt = 0.25 + Math.sin(time * 3.1) * 0.08;
+  k.pony.v += ((pt - k.pony.a) * 140 - k.pony.v * 9) * dt;
+  k.pony.a += k.pony.v * dt;
+  k.blink.t -= dt;
+  if (k.blink.t <= 0) { k.blink.on = 0.12; k.blink.t = 2 + Math.random() * 3; }
+  if (k.blink.on > 0) k.blink.on -= dt;
+}
+
+function frame(now){
+  if (!lastT) lastT = now;
+  var dt = Math.min(0.033, (now - lastT) / 1000);
+  lastT = now;
+  time += dt;
+  voiceGlobalCd -= dt;
+
+  var n = 6, h = dt / n, i, s;
+  for (s = 0; s < n; s++) for (i = 0; i < kids.length; i++) step(kids[i], h);
+  for (i = 0; i < kids.length; i++) { logic(kids[i], dt); updateKidAnim(kids[i], dt); }
+
+  for (i = parts.length - 1; i >= 0; i--) {
+    var p = parts[i];
+    p.vy += 900 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.r += dt * 6; p.life -= dt;
+    if (p.life <= 0) parts.splice(i, 1);
+  }
+  for (i = texts.length - 1; i >= 0; i--) {
+    texts[i].y -= 40 * dt; texts[i].life -= dt;
+    if (texts[i].life <= 0) texts.splice(i, 1);
+  }
+
+  var camT = Math.min(0, k1.y - 190);
+  cam += (camT - cam) * (1 - Math.exp(-dt * 7));
+  shake *= Math.exp(-dt * 10);
+
+  var sx = (Math.random() - 0.5) * shake, sy = (Math.random() - 0.5) * shake;
+  var kk = dpr * scale;
+  ctx.setTransform(kk, 0, 0, kk, 0, 0);
+  drawBackground();
+  ctx.setTransform(kk, 0, 0, kk, sx * kk, (sy - cam) * kk);
+  drawWorld();
+
+  updateHud();
+  requestAnimationFrame(frame);
+}
+
+function startGame(){
+  if (running) return;
+  running = true;
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(frame);
+}
+})();
+</script>
