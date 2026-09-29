@@ -94,6 +94,8 @@ h2{font-size:clamp(1.3rem,5.4vw,1.6rem);line-height:1.15;margin-top:10px}
 .chip.rec b{color:var(--yellow)}
 .combo{position:absolute;top:42px;left:50%;transform:translateX(-50%);font:700 1rem var(--display);color:var(--ink);background:var(--yellow);border-radius:999px;padding:2px 12px;pointer-events:none;transition:opacity .2s}
 .combo[hidden]{display:none}
+.showpw{display:inline-flex;align-items:center;gap:8px;margin-top:6px;color:var(--muted);font-weight:700;font-size:.9rem;cursor:pointer}
+.showpw input{width:18px;height:18px;accent-color:var(--cyan)}
 .toast{position:absolute;left:12px;right:12px;bottom:12px;margin:0 auto;width:fit-content;max-width:calc(100% - 24px);text-align:center;font:700 .95rem var(--display);color:var(--text);background:rgba(7,9,24,.82);border:1px solid var(--cyan);border-radius:999px;padding:5px 14px;pointer-events:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
 .hint{margin:12px 6px 4px;color:var(--muted);font-weight:800;font-size:.95rem;text-align:center;min-height:2.9em;text-wrap:balance}
 .info dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 16px;margin:14px 0 0}
@@ -172,7 +174,22 @@ h2{font-size:clamp(1.3rem,5.4vw,1.6rem);line-height:1.15;margin-top:10px}
   </div>
 
   <!-- MATH GATE -->
-  <section class="card" id="gateView">
+  <!-- PASSWORD LOCK -->
+  <section class="card" id="lockView">
+    <span class="pill">Nur f&uuml;r die Klasse</span>
+    <h1>Gesch&uuml;tzter <span>Bereich</span></h1>
+    <p class="lead">Gib das Klassen-Passwort ein, das du bekommen hast.</p>
+    <form class="answer" id="lockForm" autocomplete="off">
+      <label class="field" for="lockInput">
+        <input id="lockInput" type="password" placeholder="Passwort" aria-label="Passwort" autocapitalize="none" spellcheck="false">
+      </label>
+      <button class="btn" id="lockBtn" type="submit">Entsperren</button>
+    </form>
+    <div class="feedback" id="lockMsg" aria-live="polite"></div>
+    <label class="showpw"><input type="checkbox" id="lockShow"> Passwort anzeigen</label>
+  </section>
+
+  <section class="card" id="gateView" hidden>
     <span class="pill">Zugangs-Check</span>
     <h1>Mathe-Tor <span>zur Halle</span></h1>
     <p class="lead">L&ouml;se die Aufgabe richtig, dann geht die T&uuml;r auf.</p>
@@ -505,6 +522,52 @@ function openApp(){
 }
 
 newTask();
+
+/* ================= PASSWORD LOCK ================= */
+/* Passwords are not stored in plain text, only their FNV-1a fingerprints.
+   Accepted: "Klasse 4b" or "Emran10", any upper/lower case, with or without spaces. */
+var LOCK_HASHES = ['ff67611c', 'cd07d2a5'];
+function okHash(h){ return LOCK_HASHES.indexOf(h) >= 0; }
+function fnv1a(str){
+  var h = 0x811c9dc5;
+  for (var i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return ('0000000' + h.toString(16)).slice(-8);
+}
+function normPw(v){ return v.toLowerCase().replace(/\s+/g, ''); }
+function unlock(){
+  document.getElementById('lockView').hidden = true;
+  document.getElementById('gateView').hidden = false;
+  try { answerInput.focus({ preventScroll: true }); } catch (e) {}
+}
+var unlockedBefore = false;
+try { unlockedBefore = okHash(localStorage.getItem('hifly_unlock') || ''); } catch (e) {}
+if (unlockedBefore) unlock();
+document.getElementById('lockShow').addEventListener('change', function(){
+  document.getElementById('lockInput').type = this.checked ? 'text' : 'password';
+});
+document.getElementById('lockForm').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  initAudio();
+  var inp = document.getElementById('lockInput'), msg = document.getElementById('lockMsg');
+  var hv = fnv1a(normPw(inp.value));
+  if (okHash(hv)) {
+    try { localStorage.setItem('hifly_unlock', hv); } catch (e) {}
+    msg.className = 'feedback ok';
+    msg.textContent = 'Passwort richtig!';
+    sRight();
+    setTimeout(unlock, 600);
+  } else {
+    msg.className = 'feedback bad';
+    msg.textContent = inp.value.trim() ? 'Das Passwort stimmt nicht. Frag deine Eltern oder deine Lehrerin.' : 'Bitte gib das Passwort ein.';
+    sWrong();
+    var card = document.getElementById('lockView');
+    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+    inp.select();
+  }
+});
 
 /* ================= LEARNING AREA: tabs ================= */
 var LV = { cur: 'treffen' };
